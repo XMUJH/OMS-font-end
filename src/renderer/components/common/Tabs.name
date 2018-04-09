@@ -1,0 +1,29 @@
+  <template>
+    <el-header style="height:10.5%">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="任务进度" name="first"></el-tab-pane>
+        <el-tab-pane label="外包信息" name="second"></el-tab-pane>
+        <el-tab-pane label="任务资源" name="third"></el-tab-pane>
+        <el-tab-pane label="考勤日志" name="fourth"></el-tab-pane>
+        <el-tab-pane label="成员信息" name="five"></el-tab-pane>
+      </el-tabs>
+    </el-header>
+  </template>  
+
+<script>
+  export default {
+    data () {
+      return {
+        activeName: 'second'
+      }
+    },
+    methods: {
+      handleClick (tab, event) {
+        console.log(tab, event)
+      }
+    }
+  }
+</script>
+
+
+/*添加标签页需要单独再放一个el-header，不然标签页宽度显示不正常，目前未解决这个问题*/
