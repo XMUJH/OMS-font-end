@@ -2550,21 +2550,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+var electron = __webpack_require__(2);
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = __webpack_require__(0).join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
 
 var mainWindow = void 0;
+var ipc = electron.ipcMain;
+ipc.on('min-main-window', function () {
+  mainWindow.minimize();
+});
+ipc.on('close-main-window', function () {
+  __WEBPACK_IMPORTED_MODULE_0_electron__["app"].quit();
+});
+ipc.on('max-main-window', function () {
+  if (mainWindow.isMaximized()) {
+    mainWindow.restore();
+  } else {
+    mainWindow.maximize();
+  }
+});
 var winURL = process.env.NODE_ENV === 'development' ? 'http://localhost:9080' : 'file://' + __dirname + '/index.html';
 
 function createWindow() {
   __WEBPACK_IMPORTED_MODULE_0_electron__["Menu"].setApplicationMenu(null);
 
   mainWindow = new __WEBPACK_IMPORTED_MODULE_0_electron__["BrowserWindow"]({
-    height: 650,
+    height: 680,
     useContentSize: true,
-    width: 1000
+    width: 1000,
+    frame: false
   });
 
   mainWindow.loadURL(winURL);

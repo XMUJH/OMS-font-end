@@ -1,7 +1,7 @@
 <template>
 	<div class="content">
 		<div class="login">
-			<img  class="logo" src="../assets/logo.png">
+			<img  class="logo" src="@/assets/logo.png">
 			<h3 class="title">虹 软·外 包 管 理 平 台</h3> 					
 			<form class="login-horizontal">
 				<div class="login-group">
@@ -31,7 +31,7 @@
 body{
 	width: 100%;
 	height:100%;
-	background: url("../assets/login-bg.png")no-repeat right top;	
+	background: url(../../assets/login-bg.png)no-repeat right top;	
 }
 .login{
 	margin: 50px 0 0 100px;

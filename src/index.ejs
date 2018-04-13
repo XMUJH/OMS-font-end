@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>oms</title>
-    
     <% if (htmlWebpackPlugin.options.nodeModules) { %>
       <!-- Add `node_modules/` to global paths so `require` works properly in development -->
       <script>
@@ -11,6 +10,15 @@
       </script>
     <% } %>
     <style>
+    html,body{
+      margin:0;
+      height:100%;
+      overflow: hidden;
+      font-family: "微软雅黑",sans-serif;
+    }
+     ::-webkit-scrollbar{
+      display:none;
+    }
   </style>
   </head>
   <body>

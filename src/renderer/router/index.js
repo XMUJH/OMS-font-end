@@ -8,12 +8,12 @@ export default new Router({
     {
       path: '/login',
       name: 'login-page',
-      component: require('@/components/loginPage').default
+      component: require('@/components/page/loginPage').default
     },
     {
       path: '/register',
       name: 'register-page',
-      component: require('@/components/registerPage').default
+      component: require('@/components/page/registerPage').default
     },
     {
       path: '/',
@@ -31,6 +31,26 @@ export default new Router({
         {
           path: 'profile',
           component: require('@/components/profile/profile').default
+        },
+        {
+          path: 'task/progress',
+          component: require('@/components/task/progress').default
+        },
+        {
+          path: 'task/info',
+          component: require('@/components/task/Info').default
+        },
+        {
+          path: 'task/resource',
+          component: require('@/components/task/resource').default
+        },
+        {
+          path: 'task/diary',
+          component: require('@/components/task/diary').default
+        },
+        {
+          path: 'task/member',
+          component: require('@/components/task/member').default
         }
       ]
     }

@@ -1,46 +1,70 @@
    <template>
-   <el-header style="height:12.5%">
-    	<div class="Breadcrumb">
-    		<el-breadcrumb separator-class="el-icon-arrow-right">
-  				<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-  				<el-breadcrumb-item>活动管理</el-breadcrumb-item>
-  				<el-breadcrumb-item>活动列表</el-breadcrumb-item>
-  				<el-breadcrumb-item>活动详情</el-breadcrumb-item>
-			</el-breadcrumb>
-		</div>
-		<div class="checkin">
-			<el-button type="text" style="color:#000000">签到</el-button>
-		</div>
-		<div style="float:left;background-color:#e71740;margin-left:1%;margin-right:1%;margin-top:4.7%;width:1px;height:25%;"></div>
-		<div class="checkout">
-			<el-button type="text" style="color:#000000">签退</el-button>
-		</div>
-    </el-header>
-  </template>
-<style>
-  /*面包屑*/
-  .Breadcrumb{
-    float:left;
-    padding:5%;
-    height:100;
-    width:70%;
-  }
+     <div class="breadcrumb-wrap">
+       <div class="Breadcrumb">
+        <el-breadcrumb separator-class="el-icon-arrow-right">
+          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+          <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+          <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
+      <div class="signbox">
+        <div class="checkin">
+         <el-button class="checkin-btn" type="text" style="color:#000000">签到</el-button>
+       </div>
+       <div class="line">  
+       </div>
+       <div class="checkout">
+         <el-button class="checkout-btn" type="text" style="color:#000000">签退</el-button>
+       </div>
+     </div>
+   </div>
+ </template>
+ <style>
+ .breadcrumb-wrap{
+  position:fixed;
+  right:0;
+  left:220px;
+  background-color:#fff;
+  z-index: 100;
 
-  /*“签到”的容器*/
-  .checkin{
-  	float:left;
-	padding-top:2%;
-	padding-left:5%;
-    height:100;
-   // width:15%;
-  }
+}
+/*面包屑*/
+.signbox{
+  position: absolute;
+  padding:40px 20px 0 0;
+  right:0px;
+  top:0;
+}
+.Breadcrumb{
+  float:left;
+  width:100%;
+  margin:40px 0 38px 20px;
+  box-sizing: border-box;
+}
+.line{
+  float:left;
+  background-color:#e71740;
+  width:2px;
+  height:15px;
+  margin: 0 10px;
 
-  /*“签退”的容器*/
-   .checkout{
-  	float:left;
-	padding-top:2%;
-	//padding-left:5%;
-    height:100;
-   // width:15%;
-  }
+}
+
+/*“签到”的容器*/
+.checkin{
+ float:left;
+ line-height: 13px;
+}
+.checkin-btn,.checkout-btn{
+  padding: 0;
+  margin:0;
+}
+
+/*“签退”的容器*/
+.checkout{
+ float:left;
+ height:100;
+ line-height: 13px;
+}
 </style>

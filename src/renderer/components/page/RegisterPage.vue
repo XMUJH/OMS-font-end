@@ -1,11 +1,11 @@
 <template>
 	<div>
 		<div class="register-container">
-			<img class="register-side" src="../assets/register.jpg">
+			<img class="register-side" src="@/assets/register.jpg">
 		</div>
 		<div class="register-main">
 			<div class="header">
-				<img  class="logo" src="../assets/logo.png">
+				<img  class="logo" src="@/assets/logo.png">
 				<h3 class="title">注册</h3>
 			</div>
 			<form class="login-horizontal">
@@ -54,7 +54,7 @@
 </template>
 <script>
 	export default {
-	  name: 'register-page'
+  name: 'register-page'
 	}
 </script>
 <style>

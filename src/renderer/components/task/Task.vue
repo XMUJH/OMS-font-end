@@ -1,11 +1,108 @@
 <template>
-    <div>Task</div>
+    <div>
+    	<el-container>
+        <searchbar></searchbar>
+          <el-main class="maincontent" style="margin-top: 105px;">
+                <el-row class="myEl-Row"><font class="el-rowText">我负责的任务</font></el-row>
+                <div class="el-scrollbar">
+                    <div class="task" v-for="item in inChargeTasks" @click="detail">
+                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
+                        <p class="taskText">{{item.name}}</p>
+                    </div>
+                    <div class="task">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490 490" style="enable-background:new 0 0 490 490;" xml:space="preserve" width="80px" height="80px" class="myPlusIcon" @click="open1">
+                            <polygon points="222.031,490 267.969,490 267.969,267.969 490,267.969 490,222.031 267.969,222.031 267.969,0 222.031,0   222.031,222.031 0,222.031 0,267.969 222.031,267.969 " fill="#a5aaad"/>
+                        </svg>
+                    </div>
+                </div>
+                <el-row class="myEl-Row"><font class="el-rowText">我参与的任务</font></el-row>
+                <div class="el-scrollbar">
+                    <div class="task" v-for="item in inTasks">
+                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
+                        <p class="taskText">{{item.name}}</p>
+                    </div>
+                </div>
+            </el-main>
+        </el-container>
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'Task-page',
   data () {
+    return {
+      inChargeTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}],
+      inTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 10, color: '#f33232'}, {name: '智能外包管理平台', percentage: 60, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 30, color: '#dac606'}, {name: '智能外包管理平台', percentage: 70, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}, {name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 0, color: '#f33232'}]
+    }
+  },
+  methods: {
+    open1 () {
+      this.$prompt('请输入授权码', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消'
+      }).then(({ value }) => {
+        this.$message({
+          type: 'success',
+          message: '任务添加成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '输入已取消'
+        })
+      })
+    },
+    detail () {
+      this.$router.replace('/task/progress')
+    }
   }
 }
 </script>
+<style>
+.el-scrollbar{
+  height:260px;
+  width:100%;
+  overflow: auto;
+}
+
+.myPlusIcon{
+  height:100px; 
+  margin:0;
+}
+
+.task{
+  float:left;
+  width:130px;
+  padding:10px 5px;
+  margin:5px;
+  text-align: center;
+}
+
+.myEl-Progress{
+  margin:auto;
+}
+
+.taskText{
+  font-family: Hiragino Sans GB;
+  color:black;
+  text-align: center;
+  font-size: 0.875em;
+  margin:0;
+}
+.task:hover{   
+  float:left;
+  padding:10px 5px;
+  border-radius: 3px;
+  border-style: 1px solid rgb(198, 47, 47);
+  background-color: rgba(198, 47, 47,0.05);
+  top: 2px; /**向下偏移2px **/
+}
+.task:active{   
+  float:left;
+  padding:10px 5px;
+  border-radius: 3px;
+  border-style: 1px solid rgb(198, 47, 47);
+  background-color: rgba(198, 47, 47,0.1);
+  top: 2px; /**向下偏移2px **/
+}
+</style>
