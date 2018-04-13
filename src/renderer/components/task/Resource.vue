@@ -8,7 +8,7 @@
         <el-input placeholder="搜索资源"  size="mini" prefix-icon="el-icon-search"v-model="input21"></el-input>
       </div>
       
-      <div style="height:8%">
+      <div style="height:15%">
         <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">人脸识别API</span>
       </div>
 

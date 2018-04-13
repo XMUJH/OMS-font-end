@@ -7,9 +7,7 @@
 				<el-row class="myEl-Row">
 					<p class="el-rowText">任务目标</p>
 				</el-row>
-
 				<div class="MissionGoal"></div>
-
 				<el-row class="myEl-Row">
 					<p class="el-rowText">里程碑进度</p>
 				</el-row>

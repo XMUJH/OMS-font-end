@@ -4,29 +4,29 @@
     <breadcrumb></breadcrumb>
     <el-header class="header"><tabs></tabs></el-header>
     <el-main class="maincontent">
-       <div style="width:50%;height:10%">
-        <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search"v-model="input21"></el-input>
+       <div style="width:50%;height:10%;margin:0 0 10px 0;">
+        <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input21"></el-input>
       </div>
-      <el-table :data="tableData" style="width: 100%" height="400" header-cell-style="color:#000000;background-color:#f3f3f3">
-        <el-table-column label="头像" width="180">
+      <el-table :data="tableData" style="width:100%" height="500" header-cell-style="color:#000000;background-color:#f3f3f3">
+        <el-table-column label="头像" width=180>
           <template slot-scope="scope">
             <img id="logo" :src="scope.row.pic" class="portrait">
           </template>
         </el-table-column>
 
-        <el-table-column label="姓名" width="180">
+        <el-table-column label="姓名" width=180>
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="职务" width="180">
+        <el-table-column label="职务" width=180>
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.job }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="审核情况" width="180">
+        <el-table-column label="审核情况">
           <template slot-scope="scope">
             <span v-if="scope.row.check=== 1">已通过</span>
             <span v-if="scope.row.check=== 2" style="color: red">添加待审核</span>
@@ -64,6 +64,11 @@
           name: '郑哲',
           job: '需求分析',
           check: 3
+        }, {
+          pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1415330652,124770955&fm=11&gp=0.jpg',
+          name: '郑哲',
+          job: '需求分析',
+          check: 3
         }]
       }
     },
@@ -74,8 +79,11 @@
     }
   }
 </script>
-
+<style>
   .portrait {
     height:70px;
   }
-
+  .table{
+    width:100%;
+  }
+</style>
