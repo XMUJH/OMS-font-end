@@ -1,11 +1,8 @@
 <template>
-  <div>
-   <el-container>
-    <breadcrumb></breadcrumb>
-    <el-header class="header"><tabs></tabs></el-header>
+  
     <el-main class="maincontent">
-      <div style="width:50%;height:10%">
-        <el-input placeholder="搜索资源"  size="mini" prefix-icon="el-icon-search"v-model="input21"></el-input>
+      <div style="width:50%; height:10%">
+        <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
       
       <div style="height:15%">
@@ -21,8 +18,7 @@
       </div>
 
     </el-main>
-  </el-container>
-</div>
+ 
 </template>
 
 <script>
@@ -30,6 +26,7 @@
     name: 'resource',
     data () {
       return {
+        input: ''
       }
     }
   }

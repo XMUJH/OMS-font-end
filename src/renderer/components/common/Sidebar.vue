@@ -2,19 +2,19 @@
   <div class="nav">
     <img id="logo" src="~@/assets/logo.png" alt="MainLogo" class="leftTopLogo"> 
     <div class="leftCombine">
-      <router-link to="/task">
+      <router-link to="/outsourcee/homePage/task">
         <el-button type="text" class="leftTextButton" v-on:click="currentPart=1">我的任务</el-button>
       </router-link>
       <hr v-if="currentPart==1" class="leftLine"/>
     </div>
     <div class="leftCombine">
-      <router-link to="/source">
+      <router-link to="/outsourcee/homePage/source">
        <el-button type="text" class="leftTextButton" v-on:click="currentPart=2">我的资源</el-button>
      </router-link>
      <hr v-if="currentPart==2" class="leftLine"/>
    </div>
    <div class="leftCombine">
-    <router-link to="/profile">
+    <router-link to="/outsourcee/homePage/profile">
      <el-button type="text" class="leftTextButton" v-on:click="currentPart=3">个人信息</el-button>
    </router-link>
    <hr v-if="currentPart==3" class="leftLine"/>

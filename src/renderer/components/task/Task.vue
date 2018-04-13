@@ -53,7 +53,7 @@ export default {
       })
     },
     detail () {
-      this.$router.replace('/task/progress')
+      this.$router.replace('/outsourcee/homePage/task/detail/progress/')
     }
   }
 }

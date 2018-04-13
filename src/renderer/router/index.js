@@ -17,6 +17,10 @@ export default new Router({
     },
     {
       path: '/',
+      redirect: '/outsourcee/homepage/task'
+    },
+    {
+      path: '/outsourcee/homePage',
       name: 'home-page',
       component: require('@/components/page/homePage').default,
       children: [
@@ -33,24 +37,30 @@ export default new Router({
           component: require('@/components/profile/profile').default
         },
         {
-          path: 'task/progress',
-          component: require('@/components/task/progress').default
-        },
-        {
-          path: 'task/info',
-          component: require('@/components/task/Info').default
-        },
-        {
-          path: 'task/resource',
-          component: require('@/components/task/resource').default
-        },
-        {
-          path: 'task/diary',
-          component: require('@/components/task/diary').default
-        },
-        {
-          path: 'task/member',
-          component: require('@/components/task/member').default
+          path: 'task/detail',
+          component: require('@/components/task/Detail').default,
+          children: [
+            {
+              path: 'progress',
+              component: require('@/components/task/progress').default
+            },
+            {
+              path: 'info',
+              component: require('@/components/task/Info').default
+            },
+            {
+              path: 'resource',
+              component: require('@/components/task/resource').default
+            },
+            {
+              path: 'diary',
+              component: require('@/components/task/diary').default
+            },
+            {
+              path: 'member',
+              component: require('@/components/task/member').default
+            }
+          ]
         }
       ]
     }

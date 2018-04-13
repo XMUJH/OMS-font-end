@@ -1,8 +1,7 @@
 <template>
-  <div>
-   <el-container>
-    <breadcrumb></breadcrumb>
-    <el-header class="header"><tabs></tabs></el-header>
+ 
+   
+    
     <el-main class="maincontent">
        <div style="width:50%;height:10%;margin:0 0 10px 0;">
         <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input21"></el-input>
@@ -35,15 +34,13 @@
         </el-table-column>
       </el-table>
     </el-main>
-  </el-container>
-</div>
 </template>
 <script>
   export default {
     data () {
       return {
+        activeName: 'fifth',
         input: '',
-        activeName: 'second',
         tableData: [{
           pic: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523536608980&di=b26485e16e2445f986cd2ee9aa4521d4&imgtype=0&src=http%3A%2F%2Fwww.youstyle.com.cn%2Fupload%2F20150922%2F201509221057033505.jpg',
           name: '陈丽萍',

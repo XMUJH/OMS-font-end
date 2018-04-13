@@ -1,7 +1,4 @@
 <template>
-		<el-container>
-			<breadcrumb></breadcrumb>
-        <el-header class="header"><tabs></tabs></el-header>
         <el-main class="maincontent">
         
 				<el-row class="myEl-Row">
@@ -49,7 +46,6 @@
 				</div>
 			</div>
 			</el-main>
-		</el-container>
 </template>
 
 <script>
@@ -57,6 +53,7 @@ export default {
   name: 'Task-page',
   data () {
     return {
+      activeName: 'first'
     }
   }
 }
