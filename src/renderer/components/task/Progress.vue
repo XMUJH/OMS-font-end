@@ -35,7 +35,11 @@
 					</el-steps>
 				</div>
 
-				<div style="height:10%">
+				<el-row class="myEl-Row">
+					<p class="el-rowText">审核进度</p>
+				</el-row>
+
+				<div style="height:40px">
 					<span style="font-size:20px;font-weight:bold">里程碑三</span>
 					<span style="font-size:18px;font-weight:bold;color:#E41541">未通过</span>
 				</div>
@@ -61,7 +65,7 @@ export default {
 
 <style>
 .task-progress{
-	margin-left: 20px;
+	margin-left: 0px;
 }
 .hint{
 	margin-bottom: 20px;
