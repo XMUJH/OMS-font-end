@@ -69,7 +69,7 @@ export default {
 /*任务目标下的一块空间*/
 .MissionGoal {
   width:100%;
-  height:20%;
+  height:80px;
 }
 
 /*里程碑进度下面的提示符*/

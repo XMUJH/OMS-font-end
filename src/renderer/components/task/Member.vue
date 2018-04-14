@@ -61,11 +61,6 @@
           name: '郑哲',
           job: '需求分析',
           check: 3
-        }, {
-          pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1415330652,124770955&fm=11&gp=0.jpg',
-          name: '郑哲',
-          job: '需求分析',
-          check: 3
         }]
       }
     },

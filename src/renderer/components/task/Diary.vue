@@ -20,7 +20,43 @@
     name: 'diary',
     data () {
       return {
-        input: ''
+        input: '',
+        tableData3: [{
+          name: '陈丽萍',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }, {
+          name: '王小虎',
+          begintime: '2016-05-03 10:01',
+          endtime: '2016-05-03 22:01',
+          address: '工作日志'
+        }]
       }
     }
   }
