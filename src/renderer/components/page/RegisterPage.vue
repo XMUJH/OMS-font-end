@@ -6,7 +6,7 @@
 		<div class="register-main">
 			<div class="header">
 				<img  class="logo" src="@/assets/logo.png">
-				<h3 class="title">注册</h3>
+				<h3 class="title3">注册</h3>
 			</div>
 			<form class="login-horizontal">
 				<div class="login-group">
@@ -28,36 +28,49 @@
 						:key="item.value"
 						:label="item.label"
 						:value="item.value">
-					</el-option>
-				</el-select>
-			</div>
-			<el-option
-			v-for="item in options"
-			:key="item.value"
-			:label="item.label"
-			:value="item.value">
-		</el-option>
-	</el-select>
-
-	<div class="login-group">
-		<router-link to="/register">
-			<el-button type="primary" >注册</el-button>
-		</router-link>
-		<p class="login-group-tips">已有账号？点击登录</p>
-	</div>
-	<div class="login-group">
-		
-	</div>
-</form>
-</div>
-</div>
+					    </el-option>
+				    </el-select>
+			    </div>
+	            <div class="login-group">
+		          <router-link to="/register">
+			          <el-button type="primary" >注册</el-button>
+		          </router-link>
+		        <p class="login-group-tips">已有账号？点击登录</p>
+	            </div>
+            </form>
+        </div>
+    </div>
 </template>
+
 <script>
-	export default {
-  name: 'register-page'
-	}
+  export default {
+    name: 'register-page',
+    data () {
+      return {
+        input: '',
+        options: [{
+          value: '选项1',
+          label: 'A公司'
+        }, {
+          value: '选项2',
+          label: 'B公司'
+        }, {
+          value: '选项3',
+          label: 'C公司'
+        }, {
+          value: '选项4',
+          label: 'D公司'
+        }, {
+          value: '选项5',
+          label: 'E公司'
+        }],
+        value: ''
+      }
+    }
+  }
 </script>
 <style>
+
 body{
 	background: url();
 }
@@ -67,7 +80,7 @@ body{
 	float:left;
 	overflow: hidden;
 }
-.title{
+.title3{
 	display: inline;
 	font-size: 1.25rem;
 	font-family: "微软雅黑light","serif","sans-serif";
@@ -76,13 +89,13 @@ body{
 	margin-bottom: 1.875rem;
 }
 .header{
-	padding: 60px 0 0 80px;
-	height:100px;
+	padding-left:80px;
 	vertical-align: center;
 }
 .logo{
 	display: inline;
-	width: 100px;
+	width: 150px;
+	height:auto;
 }
 .register-side{
 	height:100%;
@@ -99,7 +112,7 @@ body{
 }
 .login-horizontal{
 	background: #fff;
-	padding: 30px 0px 30px;
+	padding: 200px 0px 30px;
 	text-align: center;
 }
 .login-group{

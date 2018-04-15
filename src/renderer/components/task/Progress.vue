@@ -28,15 +28,15 @@
 
 				<div style="height:25%;margin:20px 0 60px;">
 					<el-steps :active="2" align-center>
-						<el-step title="里程碑一" description="2018/2/14" icon="el-icon-success"></el-step>
-						<el-step title="里程碑二" description="2018/2/24" icon="el-icon-success"></el-step>
-						<el-step title="里程碑三" description="2018/3/10" icon="el-icon-warning"></el-step>
-						<el-step title="里程碑四" description="2018/3/22" icon="el-icon-time"></el-step>
+						<el-step style="cursor:pointer" titleName='里程碑一' title="里程碑一" description="2018/2/14" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
+						<el-step style="cursor:pointer" titleName='里程碑二' title="里程碑二" description="2018/2/24" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
+						<el-step style="cursor:pointer" titleName='里程碑三' title="里程碑三" description="2018/3/10" icon="el-icon-warning" @click.native='handleClick($event)'></el-step>
+						<el-step style="cursor:pointer" titleName='里程碑四' title="里程碑四" description="2018/3/22" icon="el-icon-time" @click.native='handleClick($event)'></el-step>
 					</el-steps>
 				</div>
 
 				<el-row class="myEl-Row">
-					<p class="el-rowText">审核进度</p>
+					<p class="el-rowText">审核情况</p>
 				</el-row>
 
 				<div style="height:40px">
@@ -58,6 +58,12 @@ export default {
   data () {
     return {
       activeName: 'first'
+    }
+  },
+  methods: {
+    handleClick (event) {
+      this.$router.push({path: '/outsourcee/homePage/task/detail/milestone'})
+      this.$emit('changeThirdBread', event.currentTarget.getAttribute('titleName'))
     }
   }
 }

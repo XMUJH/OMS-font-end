@@ -20,7 +20,7 @@
       </div>
       <div class="row">
         <span class="tdname">人脸信息</span>
-        <span>609490912@qq.com</span>
+         <el-button class="change-btn" type="primary">修改人脸信息</el-button>
       </div class="row">
       <div class="row">
         <span class="tdname">用户名</span>

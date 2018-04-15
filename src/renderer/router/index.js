@@ -16,6 +16,11 @@ export default new Router({
       component: require('@/components/page/registerPage').default
     },
     {
+      path: '/facerecognition',
+      name: 'facerecognition-page',
+      component: require('@/components/page/FaceRecognitionPage').default
+    },
+    {
       path: '/',
       redirect: '/outsourcee/homepage/task'
     },
@@ -35,6 +40,10 @@ export default new Router({
         {
           path: 'profile',
           component: require('@/components/profile/profile').default
+        },
+        {
+          path: 'task/edittask',
+          component: require('@/components/task/edittask').default
         },
         {
           path: 'task/detail',
@@ -59,6 +68,18 @@ export default new Router({
             {
               path: 'member',
               component: require('@/components/task/member').default
+            },
+            {
+              path: 'memberdetail',
+              component: require('@/components/task/memberdetail').default
+            },
+            {
+              path: 'milestone',
+              component: require('@/components/task/milestone').default
+            },
+            {
+              path: 'addmember',
+              component: require('@/components/task/addmember').default
             }
           ]
         }

@@ -4,9 +4,10 @@
     
     <el-main class="maincontent">
        <div style="width:50%;height:10%;margin:0 0 10px 0;">
-        <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input21"></el-input>
+        <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
-      <el-table :data="tableData" style="width:100%" height="500" header-cell-style="color:#000000;background-color:#f3f3f3">
+      <el-button v-if="userRole=='incharge'" type="primary" round @click="addClick">添加成员</el-button>
+      <el-table :data="tableData" style="width:100%" height="500" header-cell-style='color:#000000;background-color:#f3f3f3' @cell-click="handleClick($event)">
         <el-table-column label="头像" width=180>
           <template slot-scope="scope">
             <img id="logo" :src="scope.row.pic" class="portrait">
@@ -30,6 +31,13 @@
             <span v-if="scope.row.check=== 1">已通过</span>
             <span v-if="scope.row.check=== 2" style="color: red">添加待审核</span>
             <span v-if="scope.row.check=== 3" style="color: red">删除待审核</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column label="删除" width=120 v-if="userRole=='incharge'">
+          <template slot-scope="scope">
+            <el-button v-if="scope.row.check=== 1" type="danger" icon="el-icon-delete" circle @click="open_DS(tableData,scope.$index,$event)">
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,8 +73,41 @@
       }
     },
     methods: {
-      handleClick (tab, event) {
-        console.log(tab, event)
+      handleClick (event) {
+        this.$router.push({path: '/outsourcee/homePage/task/detail/memberdetail'})
+      },
+      addClick () {
+        this.$router.push({path: '/outsourcee/homePage/task/detail/addmember'})
+        this.$emit('changeThirdBread', '添加成员')
+      },
+      open_DS (rows, index, event) {
+        event.stopPropagation()
+        this.$confirm('此操作将删除该成员', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '等待发包方审核'
+          })
+          rows[index].check = 3
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+      }
+    },
+    props: ['userRole', 'newMember'],
+    created: function () {
+      if (this.newMember !== '') {
+        this.tableData.push({
+          pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1415330652,124770955&fm=11&gp=0.jpg',
+          name: this.newMember.name,
+          job: this.newMember.job,
+          check: 2
+        })
       }
     }
   }

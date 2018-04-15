@@ -1,14 +1,6 @@
 <template>
 	<el-main style="height:560px">
 
-      <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="任务进度" name="first"></el-tab-pane>
-        <el-tab-pane label="外包信息" name="second"></el-tab-pane>
-        <el-tab-pane label="任务资源" name="third"></el-tab-pane>
-        <el-tab-pane label="考勤日志" name="fourth"></el-tab-pane>
-        <el-tab-pane label="成员信息" name="five"></el-tab-pane>
-      </el-tabs>
-
       <el-row class="myEl-Row">
         <font class="el-rowText">里程碑目标</font>
       </el-row>
@@ -22,17 +14,27 @@
       <el-row class="myEl-Row">
         <font class="el-rowText">查看成果</font>
       </el-row>
-      <div style="height:8%;padding-top:8%">
-        <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">需求规格说明书1.0</span>
-        <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">需求规格说明书2.0</span>
+      <div style="height:150px; overflow:auto">
+        <el-upload
+          class="upload-demo"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :on-preview="handlePreview"
+          :on-remove="handleRemove"
+          :before-remove="beforeRemove"
+          multiple
+          :limit="5"
+          :on-exceed="handleExceed"
+          :file-list="fileList">
+            <el-button size="small" type="primary" v-if="userRole=='incharge'">点击上传</el-button>
+            <div slot="tip" class="el-upload__tip" v-if="userRole=='incharge'">只能上传rar/zip文件，且不超过500mb</div>
+        </el-upload>
       </div>
 
       <el-row class="myEl-Row">
         <font class="el-rowText">审核进程</font>
       </el-row>
-      <div style="height:8%"></div>
 
-      <div style="margin-left:2%">
+      <div style="margin-left:2%;overflow:auto">
         <div style="height:30px">
           <span class="CheckTime">2018/2/12</span>
           <span>已通过</span>
@@ -57,6 +59,29 @@
 
     </el-main>
 </template>
+
+<script>
+  export default {
+    data () {
+      return {
+        fileList: []
+      }
+    },
+    methods: {
+      handleRemove (file, fileList) {
+      },
+      handlePreview (file) {
+      },
+      handleExceed (files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      },
+      beforeRemove (file, fileList) {
+        return this.$confirm(`确定移除 ${file.name}？`)
+      }
+    },
+    props: ['userRole']
+  }
+</script>
 
 <style>
   .CheckTime {

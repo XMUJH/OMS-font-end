@@ -1,23 +1,58 @@
-   <template>
-     <div class="breadcrumb-wrap">
-       <div class="Breadcrumb">
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>智能外包管理平台</el-breadcrumb-item>
-        </el-breadcrumb>
-      </div>
-      <div class="signbox">
-        <div class="checkin">
-         <el-button class="checkin-btn" type="text" style="color:#000000">签到</el-button>
-       </div>
-       <div class="line">  
-       </div>
-       <div class="checkout">
-         <el-button class="checkout-btn" type="text" style="color:#000000">签退</el-button>
-       </div>
-     </div>
-   </div>
- </template>
+<template>
+    <div class="breadcrumb-wrap">
+        <div class="Breadcrumb">
+            <el-breadcrumb separator-class="el-icon-arrow-right" style="height:30px">
+                <el-breadcrumb-item :to="{ path: '/outsourcee/homepage/task' }">我的任务</el-breadcrumb-item>
+                <el-breadcrumb-item style="cursor:pointer" @click.native='handleClick' v-if="currentFirstBread!=''">{{currentFirstBread}}</el-breadcrumb-item>
+                <el-breadcrumb-item style="cursor:pointer" @click.native='handleClick' v-if="currentSecondBread!=''">{{currentSecondBread}}</el-breadcrumb-item>
+                <el-breadcrumb-item style="cursor:pointer" v-if="currentThirdBread!=''">{{currentThirdBread}}</el-breadcrumb-item>
+            </el-breadcrumb>
+        </div>
+        <div class="signbox">
+            <div class="checkin">
+                <el-button class="checkin-btn" type="text" style="color:#000000" @click="callInRoll">签到</el-button>
+            </div>
+            <div class="line">  
+            </div>
+            <div class="checkout">
+                <el-button class="checkout-btn" type="text" style="color:#000000" @click="finishJob">签退</el-button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+  export default {
+    data () {
+      return {
+      }
+    },
+    methods: {
+      handleClick () {
+        if (this.currentSecondBread === '任务进度') this.$router.push({path: '/outsourcee/homePage/task/detail/progress'})
+        if (this.currentSecondBread === '外包信息') this.$router.push({path: '/outsourcee/homePage/task/detail/info'})
+        if (this.currentSecondBread === '任务资源') this.$router.push({path: '/outsourcee/homePage/task/detail/resource'})
+        if (this.currentSecondBread === '考勤日志') this.$router.push({path: '/outsourcee/homePage/task/detail/diary'})
+        if (this.currentSecondBread === '成员信息') this.$router.push({path: '/outsourcee/homePage/task/detail/member'})
+        this.$emit('changeThirdBread', '')
+      },
+      callInRoll () {
+        const h = this.$createElement
+        this.$notify({
+          title: '签到成功',
+          message: h('i', {style: 'color: rgb(198, 47, 47)'}, '祝您工作愉快'),
+          type: 'success',
+          offset: 100
+        })
+      },
+      finishJob () {
+        this.$emit('changeDialogShow', true)
+      }
+    },
+    props: ['currentFirstBread', 'currentSecondBread', 'currentThirdBread']
+  }
+</script>
+
  <style>
  .breadcrumb-wrap{
   position:fixed;

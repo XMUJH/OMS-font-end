@@ -64,6 +64,7 @@
   width:55%;
   margin-bottom: 1%;
   border:1px solid #E41541;
+  background-color: #E41541;
 }
 
 .leftCombine{

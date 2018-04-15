@@ -22,6 +22,12 @@
         else if (tab.name === 'third') this.$router.push({path: '/outsourcee/homePage/task/detail/' + 'resource'})
         else if (tab.name === 'fourth') this.$router.push({path: '/outsourcee/homePage/task/detail/' + 'diary'})
         else this.$router.push({path: '/outsourcee/homePage/task/detail/' + 'member'})
+        if (tab.name === 'first') this.$emit('changeSecondBread', '任务进度')
+        else if (tab.name === 'second') this.$emit('changeSecondBread', '外包信息')
+        else if (tab.name === 'third') this.$emit('changeSecondBread', '任务资源')
+        else if (tab.name === 'fourth') this.$emit('changeSecondBread', '考勤日志')
+        else this.$emit('changeSecondBread', '成员信息')
+        this.$emit('changeThirdBread', '')
       }
     }
   }

@@ -5,17 +5,46 @@
         <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
       
-      <div style="height:60px">
-        <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">人脸识别API</span>
-      </div>
-
-      <div style="height:60px">
-        <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">相关信息</span>
-      </div>
-
-      <div style="height:60px">
-        <span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">要求说明</span>
-      </div>
+      <el-table
+        :data="tableData"
+        border
+        style="width: 700px;overflow:auto">
+          <el-table-column
+            fixed
+            prop="date"
+            label="日期"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="名称"
+            width="150">
+          </el-table-column>
+          <el-table-column
+            prop="type"
+            label="格式"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="size"
+            label="大小"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="level"
+            label="安全等级"
+            width="300">
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="100">
+            <template slot-scope="scope">
+              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small">下载</el-button>
+            </template>
+          </el-table-column>
+      </el-table>
 
     </el-main>
  
@@ -26,7 +55,32 @@
     name: 'resource',
     data () {
       return {
-        input: ''
+        input: '',
+        tableData: [{
+          date: '2016-05-03',
+          name: '需求规格说明1.0',
+          type: 'doc',
+          size: '19.3k',
+          level: 'A'
+        }, {
+          date: '2016-05-02',
+          name: '需求规格说明1.0',
+          type: 'doc',
+          size: '19.3k',
+          level: 'B'
+        }, {
+          date: '2016-05-02',
+          name: '需求规格说明1.0',
+          type: 'doc',
+          size: '19.3k',
+          level: 'C'
+        }, {
+          date: '2016-05-01',
+          name: '需求规格说明1.0',
+          type: 'doc',
+          size: '19.3k',
+          level: 'D'
+        }]
       }
     }
   }

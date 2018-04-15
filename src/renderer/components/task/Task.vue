@@ -4,8 +4,12 @@
         <searchbar></searchbar>
           <el-main class="maincontent" style="margin-top: 105px;">
                 <el-row class="myEl-Row"><font class="el-rowText">我负责的任务</font></el-row>
+                <v-contextmenu ref="contextmenuTaskMini" theme="bright">
+                        <v-contextmenu-item>进入任务</v-contextmenu-item>
+                        <v-contextmenu-item @click="edit">编辑里程碑</v-contextmenu-item>
+                </v-contextmenu>
                 <div class="el-scrollbar">
-                    <div class="task" v-for="item in inChargeTasks" @click="detail">
+                    <div class="task" v-for="item in inChargeTasks" :taskName=item.name @click="detail1($event)" v-contextmenu:contextmenuTaskMini>
                         <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
                         <p class="taskText">{{item.name}}</p>
                     </div>
@@ -17,7 +21,7 @@
                 </div>
                 <el-row class="myEl-Row"><font class="el-rowText">我参与的任务</font></el-row>
                 <div class="el-scrollbar">
-                    <div class="task" v-for="item in inTasks">
+                    <div class="task" v-for="item in inTasks" :taskName=item.name @click="detail2($event)">
                         <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
                         <p class="taskText">{{item.name}}</p>
                     </div>
@@ -45,6 +49,7 @@ export default {
           type: 'success',
           message: '任务添加成功'
         })
+        this.$router.replace('/outsourcee/homePage/task/edittask/')
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -52,8 +57,18 @@ export default {
         })
       })
     },
-    detail () {
+    detail1 (event) {
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
+      this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
+      this.$emit('changeUserRole', 'incharge')
+    },
+    detail2 (event) {
+      this.$router.replace('/outsourcee/homePage/task/detail/progress/')
+      this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
+      this.$emit('changeUserRole', 'participate')
+    },
+    edit (vm, event) {
+      this.$router.replace('/outsourcee/homePage/task/edittask/')
     }
   }
 }

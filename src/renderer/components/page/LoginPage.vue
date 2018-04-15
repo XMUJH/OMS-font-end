@@ -2,7 +2,7 @@
 	<div class="content">
 		<div class="login">
 			<img  class="logo" src="@/assets/logo.png">
-			<h3 class="title">虹 软·外 包 管 理 平 台</h3> 					
+			<h3 class="title2">虹 软·外 包 管 理 平 台</h3> 					
 			<form class="login-horizontal">
 				<div class="login-group">
 					<el-input v-model="input" placeholder="用户名"></el-input>
@@ -11,12 +11,14 @@
 					<el-input v-model="input" placeholder="密码"></el-input>
 				</div>
 				<div class="login-group">
-					<router-link to="/register">
+					<router-link to="/facerecognition">
 						<el-button type="primary" >登录</el-button>
 					</router-link>
 				</div>
 				<div class="login-group">
-					<p class="login-group-tips">第一次登录？点击注册</p>
+				    <router-link to="/register">
+					    <p class="login-group-tips">第一次登录？点击注册</p>
+					</router-link>
 				</div>
 			</form>
 		</div>
@@ -24,7 +26,12 @@
 </template>
 <script>
 	export default {
-	  name: 'login-page'
+	  name: 'login-page',
+	  data () {
+	    return {
+	      input: ''
+	    }
+	  }
 	}
 </script>
 <style>
@@ -38,7 +45,7 @@ body{
 	width:380px;
 	text-align: center;
 }
-.title{
+.title2{
 	display: block;
 	font-size: 1.25rem;
 	font-family: "微软雅黑light","serif","sans-serif";

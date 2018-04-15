@@ -11,6 +11,10 @@ import tabs from './components/common/Tabs.vue'
 import Mytitle from './components/common/Title.vue'
 import Searchbar from './components/common/Searchbar.vue'
 import './style/style.css'
+import contextmenu from 'v-contextmenu'
+import 'v-contextmenu/dist/index.css'
+import draggable from 'vuedraggable'
+
 if (!process.env.IS_WEB) {
   Vue.use(require('vue-electron'))
   Vue.use(ElementUI)
@@ -19,6 +23,9 @@ if (!process.env.IS_WEB) {
   Vue.component('tabs', tabs)
   Vue.component('Mytitle', Mytitle)
   Vue.component('searchbar', Searchbar)
+  Vue.use(contextmenu)
+  Vue.use(draggable)
+  Vue.component('draggable', draggable)
 }
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false

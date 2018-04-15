@@ -1,0 +1,124 @@
+<template>
+	<div>
+		<el-container>
+      <el-button type="primary" round @click="goBack" style="position:fixed;left:830px;top:90px;width:130px">返回</el-button>
+      <font style="font-weight:bold;position:fixed;left:250px;top:90px;width:130px">编辑里程碑</font>
+			<el-main class="maincontent" style="margin-top: 105px;">
+				    <el-row class="myEl-Row">
+        			<font class="el-rowText">任务目标</font>
+      			</el-row>
+      			<div style="height:30px">
+        			<span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">任务目标</span>
+      			</div>
+            <div style="height:13px"/>
+       			<el-row class="myEl-Row">
+        			<font class="el-rowText">合同信息</font>
+      			</el-row>
+      			<div style="height:30px">
+        			<span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">合同信息</span>
+      			</div>
+            <div style="height:13px"/>
+      			<el-row class="myEl-Row">
+        			<font class="el-rowText">保密协议</font>
+      			</el-row>
+      			<div style="height:30px">
+        			<span style="margin-left:2%;margin-right:5%;text-decoration:underline;font-weight:bold">保密协议</span>
+      			</div>
+            <div style="height:13px"/>
+      			<el-row class="myEl-Row">
+        			<font class="el-rowText">里程碑</font>
+      			</el-row>
+            <div style="height:13px"/>
+				    <div style="margin:10px 0 10px;">
+					      <el-steps :active=allStones.length align-center size="mini">
+						    <el-step style="cursor:pointer" v-for="(item, index) in allStones" :titleIndex=index :title=item.name :description=item.time icon="el-icon-time" @click.native='handleClick($event)'></el-step>
+					      </el-steps>
+				    </div>
+            <div style="height:13px"/>
+      			<div style="height:30px">
+      				<el-button type="primary" size="mini" round @click="dialogShow=true">添加</el-button>
+      			</div>
+            <el-dialog title="请输入里程碑信息" :visible.sync="dialogShow">
+                  <el-input placeholder="输入里程碑名称" v-model="input0" size="small" clearable></el-input>
+                  <div style="height:5px"/>
+                  <el-input placeholder="输入里程碑目标" v-model="input1" size="small" clearable type="textarea"></el-input>
+                  <div style="height:5px"/>
+                  <div class="block">
+                    <el-date-picker v-model="value1" type="date" placeholder="选择日期" size="small"></el-date-picker>
+                  </div>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogShow = false">取 消</el-button>
+                    <el-button type="primary" @click="finishAdd">确 定</el-button>
+                </div>
+           </el-dialog>
+    	</el-main>
+		</el-container>
+	</div>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      pickerOptions1: {
+        disabledDate (time) {
+          return time.getTime() > Date.now()
+        }
+      },
+      a: '',
+      value1: '',
+      dialogShow: false,
+      input0: '',
+      input1: '',
+      changeIndex: '',
+      allStones: [
+        {
+          name: '里程碑一',
+          time: '2018/2/14'
+        },
+        {
+          name: '里程碑二',
+          time: '2018/2/24'
+        },
+        {
+          name: '里程碑三',
+          time: '2018/3/10'
+        },
+        {
+          name: '里程碑四',
+          time: '2018/3/22'
+        },
+        {
+          name: '里程碑五',
+          time: '2018/3/26'
+        }
+      ]
+    }
+  },
+  methods: {
+    finishAdd () {
+      this.a = Number(this.value1.getMonth()) + Number(1)
+      if (this.changeIndex === '') {
+        this.allStones.push({
+          name: this.input0,
+          time: this.value1.getFullYear() + '/' + this.a + '/' + this.value1.getDate()
+        })
+      }
+      if (this.changeIndex !== '') {
+        this.allStones[this.changeIndex] = {
+          name: this.input0,
+          time: this.value1.getFullYear() + '/' + this.a + '/' + this.value1.getDate()
+        }
+      }
+      this.dialogShow = false
+      if (this.changeIndex !== '') this.changeIndex = ''
+    },
+    goBack () {
+      this.$router.replace('/outsourcee/homePage/task/')
+    },
+    handleClick (event) {
+      this.dialogShow = true
+      this.changeIndex = event.currentTarget.getAttribute('titleIndex')
+    }
+  }
+}
+</script>
