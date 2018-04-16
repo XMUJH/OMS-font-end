@@ -7,7 +7,11 @@
 
 <script>
   export default {
-    name: 'oms'
+    name: 'oms',
+    data () {
+      return {
+      }
+    }
   }
 </script>
 

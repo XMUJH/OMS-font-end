@@ -1,5 +1,5 @@
 <template>
-	<el-main style="height:560px">
+	<el-main class="maincontent">
 
       <el-row class="myEl-Row">
         <font class="el-rowText">里程碑目标</font>

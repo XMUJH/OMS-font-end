@@ -5,15 +5,13 @@
 			<h3 class="title2">虹 软·外 包 管 理 平 台</h3> 					
 			<form class="login-horizontal">
 				<div class="login-group">
-					<el-input v-model="input" placeholder="用户名"></el-input>
+					<el-input v-model="input0" placeholder="用户名"></el-input>
 				</div>
 				<div class="login-group">
-					<el-input v-model="input" placeholder="密码"></el-input>
+					<el-input v-model="input1" placeholder="密码"></el-input>
 				</div>
 				<div class="login-group">
-					<router-link to="/facerecognition">
-						<el-button type="primary" >登录</el-button>
-					</router-link>
+				    <el-button type="primary" @click='handleClick'>登录</el-button>
 				</div>
 				<div class="login-group">
 				    <router-link to="/register">
@@ -29,7 +27,14 @@
 	  name: 'login-page',
 	  data () {
 	    return {
-	      input: ''
+	      input0: '',
+	      input1: ''
+	    }
+	  },
+	  methods: {
+	    handleClick () {
+	      if (this.input0 === '虹软公司') this.$router.replace('/contractee/homePage/task')
+	      if (this.input0 === '胡江海') this.$router.replace('/outsourcee/homePage/task')
 	    }
 	  }
 	}
@@ -38,7 +43,7 @@
 body{
 	width: 100%;
 	height:100%;
-	background: url(../../assets/login-bg.png)no-repeat right top;	
+	//background: url(../../assets/login-bg.png)no-repeat right top;	
 }
 .login{
 	margin: 50px 0 0 100px;

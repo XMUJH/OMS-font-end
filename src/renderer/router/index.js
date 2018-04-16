@@ -22,7 +22,7 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/outsourcee/homepage/task'
+      redirect: '/login'
     },
     {
       path: '/outsourcee/homePage',
@@ -80,6 +80,71 @@ export default new Router({
             {
               path: 'addmember',
               component: require('@/components/task/addmember').default
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '/contractee/homePage',
+      name: 'home-page2',
+      component: require('@/components/page/homePage2').default,
+      children: [
+        {
+          path: 'task',
+          component: require('@/components/task/task2').default
+        },
+        {
+          path: 'task/addtask',
+          component: require('@/components/task/addtask').default
+        },
+        {
+          path: 'source',
+          component: require('@/components/source/source2').default
+        },
+        {
+          path: 'addsource',
+          component: require('@/components/source/addsource').default
+        },
+        {
+          path: 'editsource',
+          component: require('@/components/source/editsource').default
+        },
+        {
+          path: 'allunits',
+          component: require('@/components/allunits/allunits').default
+        },
+        {
+          path: 'task/detail',
+          component: require('@/components/task/Detail2').default,
+          children: [
+            {
+              path: 'progress',
+              component: require('@/components/task/progress2').default
+            },
+            {
+              path: 'info',
+              component: require('@/components/task/Info2').default
+            },
+            {
+              path: 'resource',
+              component: require('@/components/task/resource2').default
+            },
+            {
+              path: 'diary',
+              component: require('@/components/task/diary2').default
+            },
+            {
+              path: 'member',
+              component: require('@/components/task/member2').default
+            },
+            {
+              path: 'memberdetail',
+              component: require('@/components/task/memberdetail2').default
+            },
+            {
+              path: 'milestone',
+              component: require('@/components/task/milestone2').default
             }
           ]
         }

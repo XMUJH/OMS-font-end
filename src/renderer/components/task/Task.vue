@@ -1,7 +1,7 @@
 <template>
     <div>
     	<el-container>
-        <searchbar></searchbar>
+        <searchbar :showContent='"请输入要查询的任务名称"'></searchbar>
           <el-main class="maincontent" style="margin-top: 105px;">
                 <el-row class="myEl-Row"><font class="el-rowText">我负责的任务</font></el-row>
                 <v-contextmenu ref="contextmenuTaskMini" theme="bright">

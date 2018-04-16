@@ -15,7 +15,7 @@
 body{
 	width: 100%;
 	height:100%;
-	background: url(../../assets/face-recognition.png)no-repeat;
+	//background: url(../../assets/face-recognition.png)no-repeat;
 	background-size:100% 100%; 	
 }
 .faceRec-DS{

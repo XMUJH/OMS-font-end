@@ -6,8 +6,11 @@ import App from './App'
 import router from './router'
 import store from './store'
 import sidebar from './components/common/Sidebar.vue'
+import sidebar2 from './components/common/Sidebar2.vue'
 import breadcrumb from './components/common/Breadcrumb.vue'
+import breadcrumb2 from './components/common/Breadcrumb2.vue'
 import tabs from './components/common/Tabs.vue'
+import tabs2 from './components/common/Tabs2.vue'
 import Mytitle from './components/common/Title.vue'
 import Searchbar from './components/common/Searchbar.vue'
 import './style/style.css'
@@ -20,9 +23,12 @@ if (!process.env.IS_WEB) {
   Vue.use(ElementUI)
   Vue.component('sidebar', sidebar)
   Vue.component('breadcrumb', breadcrumb)
+  Vue.component('breadcrumb2', breadcrumb2)
   Vue.component('tabs', tabs)
+  Vue.component('tabs2', tabs2)
   Vue.component('Mytitle', Mytitle)
   Vue.component('searchbar', Searchbar)
+  Vue.component('sidebar2', sidebar2)
   Vue.use(contextmenu)
   Vue.use(draggable)
   Vue.component('draggable', draggable)

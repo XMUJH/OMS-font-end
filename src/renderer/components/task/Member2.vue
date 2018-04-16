@@ -6,7 +6,6 @@
        <div style="width:50%;height:10%;margin:0 0 10px 0;">
         <el-input placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
-      <el-button v-if="userRole=='incharge'" type="primary" round @click="addClick">添加成员</el-button>
       <el-table :data="tableData" style="width:100%" height="500" header-cell-style='color:#000000;background-color:#f3f3f3' @cell-click="handleClick($event)">
         <el-table-column label="头像" width=180>
           <template slot-scope="scope">
@@ -20,7 +19,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="职务" width=180>
+        <el-table-column label="职务" width=150>
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.job }}</span>
           </template>
@@ -35,10 +34,12 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="删除" width=120 v-if="userRole=='incharge'">
+        <el-table-column label="操作" width=120>
           <template slot-scope="scope">
-            <el-button v-if="scope.row.check=== 1" type="danger" icon="el-icon-delete" circle @click="open_DS(tableData,scope.$index,$event)">
-            </el-button>
+            <el-button v-if="scope.row.check=== 2" type="success" icon="el-icon-check" circle @click="open_DS0(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 2" type="danger" icon="el-icon-error" circle @click="open_DS1(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 3" type="success" icon="el-icon-check" circle @click="open_DS0(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 3" type="danger" icon="el-icon-error" circle @click="open_DS1(tableData,scope.$index,$event)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -75,39 +76,42 @@
     },
     methods: {
       handleClick (event) {
-        this.$router.push({path: '/outsourcee/homePage/task/detail/memberdetail'})
+        this.$router.push({path: '/contractee/homePage/task/detail/memberdetail'})
       },
-      addClick () {
-        this.$router.push({path: '/outsourcee/homePage/task/detail/addmember'})
-        this.$emit('changeThirdBread', '添加成员')
-      },
-      open_DS (rows, index, event) {
+      open_DS0 (rows, index, event) {
         event.stopPropagation()
-        this.$confirm('此操作将删除该成员', '提示', {
+        this.$confirm('确定通过审核', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '等待发包方审核'
+            message: '审核通过'
           })
-          rows[index].check = 3
+          rows[index].check = 1
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '已取消审核'
           })
         })
-      }
-    },
-    props: ['userRole', 'newMember'],
-    created: function () {
-      if (this.newMember !== '') {
-        this.tableData.push({
-          pic: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=1415330652,124770955&fm=11&gp=0.jpg',
-          name: this.newMember.name,
-          job: this.newMember.job,
-          check: 2
+      },
+      open_DS1 (rows, index, event) {
+        event.stopPropagation()
+        this.$confirm('不通过此次人员变动？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '审核完成'
+          })
+          rows[index].check = 4
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消审核'
+          })
         })
       }
     }

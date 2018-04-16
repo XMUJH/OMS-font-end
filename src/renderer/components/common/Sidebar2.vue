@@ -2,20 +2,20 @@
   <div class="nav">
     <img id="logo" src="~@/assets/logo.png" alt="MainLogo" class="leftTopLogo"> 
     <div class="leftCombine">
-      <router-link to="/outsourcee/homePage/task">
-        <el-button type="text" class="leftTextButton" v-on:click="currentPart=1">我的任务</el-button>
+      <router-link to="/contractee/homePage/task">
+        <el-button type="text" class="leftTextButton" v-on:click="currentPart=1">项目管理</el-button>
       </router-link>
       <hr v-if="currentPart==1" class="leftLine"/>
     </div>
     <div class="leftCombine">
-      <router-link to="/outsourcee/homePage/source">
-       <el-button type="text" class="leftTextButton" v-on:click="currentPart=2">参考资源</el-button>
+      <router-link to="/contractee/homePage/source">
+       <el-button type="text" class="leftTextButton" v-on:click="currentPart=2">资源管理</el-button>
      </router-link>
      <hr v-if="currentPart==2" class="leftLine"/>
    </div>
    <div class="leftCombine">
-    <router-link to="/outsourcee/homePage/profile">
-     <el-button type="text" class="leftTextButton" v-on:click="currentPart=3">个人信息</el-button>
+    <router-link to="/contractee/homePage/allunits">
+     <el-button type="text" class="leftTextButton" v-on:click="currentPart=3">外包单位</el-button>
    </router-link>
    <hr v-if="currentPart==3" class="leftLine"/>
  </div>

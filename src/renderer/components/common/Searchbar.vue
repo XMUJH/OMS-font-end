@@ -1,6 +1,6 @@
 <template>
   <el-header class="searchbar">
-    <el-input v-model="input" class='myEl-input' placeholder="请输入要查询的任务名称">
+    <el-input v-model="input" class='myEl-input' :placeholder=showContent>
     </el-input>
     <el-button icon="el-icon-search" class="searchIcon"></el-button>
   </el-header>
@@ -12,7 +12,8 @@
       return {
         input: ''
       }
-    }
+    },
+    props: ['showContent']
   }
 </script>
 
