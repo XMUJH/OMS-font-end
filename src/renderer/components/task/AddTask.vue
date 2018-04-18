@@ -65,7 +65,7 @@ export default {
       document.getElementById('two').style.display = ''
     },
     add () {
-      this.$emit('addNewTask', {name: 'hahaha', percentage: 0, color: '#f33232'})
+      this.$emit('addNewTask', {name: '演示用任务', percentage: 0, color: '#f33232'})
       this.$router.replace('/contractee/homePage/task')
     }
   }

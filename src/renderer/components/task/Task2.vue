@@ -79,7 +79,7 @@ export default {
     return {
       layers: [],
       allProjects: [{name: '互联网+', percentage: '100%', height: '81%'}, {name: '服务外包', percentage: '10%', height: '8%'}],
-      allTasks: [{name: 'Vehicle Pro', percentage: 80, color: '#2cd64d'}, {name: '厦门大学校园助手', percentage: 10, color: '#f33232'}, {name: '众包旅游向导平台', percentage: 60, color: '#3f95ce'}, {name: '中间件设计', percentage: 30, color: '#dac606'}, {name: '智能机器人', percentage: 70, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}, {name: '前背景智能分离技术', percentage: 80, color: '#2cd64d'}, {name: '办公自动化系统', percentage: 0, color: '#f33232'}]
+      allTasks: [{name: 'Vehicle Pro', percentage: 80, color: '#2cd64d'}, {name: '厦门大学校园助手', percentage: 10, color: '#f33232'}, {name: '众包旅游向导平台', percentage: 60, color: '#3f95ce'}, {name: '中间件设计', percentage: 30, color: '#dac606'}, {name: '智能机器人', percentage: 70, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}, {name: '前背景智能分离技术', percentage: 80, color: '#2cd64d'}, {name: '办公自动化系统', percentage: 0, color: '#f33232'}, {name: '演示用任务', percentage: 0, color: '#f33232'}]
     }
   },
   methods: {

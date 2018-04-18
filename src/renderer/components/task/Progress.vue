@@ -28,9 +28,9 @@
 				</div>
 
 				<div style="height:25%;margin:20px 0 60px;">
-					<el-steps :active="2" align-center>
-						<el-step style="cursor:pointer" titleName='需求分析' title="需求分析" description="2018/3/14" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
-						<el-step style="cursor:pointer" titleName='详细设计' title="详细设计" description="2018/3/20" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
+					<el-steps :active="1" align-center>
+						<el-step style="cursor:pointer" titleName='需求分析' title="需求分析" description="2018/4/18" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
+						<el-step style="cursor:pointer" titleName='详细设计' title="详细设计" description="2018/4/19" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
 						<el-step style="cursor:pointer" titleName='界面设计' title="界面设计" description="2018/4/20" icon="el-icon-warning" @click.native='handleClick($event)'></el-step>
 						<el-step style="cursor:pointer" titleName='数据库设计' title="数据库设计" description="2018/4/25" icon="el-icon-time" @click.native='handleClick($event)'></el-step>
 					</el-steps>
@@ -41,13 +41,13 @@
 				</el-row>
 
 				<div style="height:40px">
-					<span style="font-size:20px;font-weight:bold">界面设计</span>
+					<span style="font-size:20px;font-weight:bold">详细设计</span>
 					<span style="font-size:18px;font-weight:bold;color:#E41541">未通过</span>
 				</div>
 
 				<div>
 					<span style="font-size:20px;font-weight:bold">原因：</span>
-					<span style="font-size:13px;font-weight:bold">人物头像需要能够调整比例，可能需要更合适的图片控件将图片进行处理</span>
+					<span style="font-size:13px;font-weight:bold">数据库设计过于复杂</span>
 				</div>
 			</div>
 			</el-main>

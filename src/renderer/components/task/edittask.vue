@@ -8,7 +8,7 @@
 				    <el-row class="myEl-Row">
         			<font class="el-rowText">任务名称</font>
       			</el-row>
-            <p class="goal">课程管理系统</p>
+            <p class="goal">演示用任务</p>
             <el-row class="myEl-Row">
               <font class="el-rowText">任务目标</font>
             </el-row>
@@ -77,22 +77,7 @@ export default {
       goal: '随着公司业务的发展以及在 AI 和人工智能领域的持续深入，需要把部分工作外包。外包可以更加有效的利用社会资源，优化资源利用率。但在外包实践中，我们遇到诸如任务跟踪，人员管理，资源访问控制的问题，我们希望能够有一套众包管理平台，更好的管理人员和任务。',
       changeIndex: '',
       allStones: [
-        {
-          name: '需求分析',
-          time: '2018/3/14'
-        },
-        {
-          name: '详细设计',
-          time: '2018/3/20'
-        },
-        {
-          name: '界面设计',
-          time: '2018/4/20'
-        },
-        {
-          name: '数据库设计',
-          time: '2018/4/25'
-        }]
+      ]
     }
   },
   methods: {

@@ -14,7 +14,7 @@
     </el-header>
     <div class="profile-main">
       <div class="profile-head">    
-       <img class="avatar" alt="头像" src="/static/photo-ds2.png">
+       <img class="avatar" alt="头像" src="static/photo-ds2.png">
        <span class="profile-title">邓帅</span>
      </div>
      <div class="table">

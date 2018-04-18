@@ -168,6 +168,7 @@
         this.companyOrMember = 0
       },
       open_DS (rows, index) {
+        event.stopPropagation()
         this.$confirm('此操作将删除该公司及内部所有成员信息', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消'

@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-		<div class="faceRec-DS">
+		<div class="faceRec-DS" @click="handleClick">
 			<img  class="logo-DS" src="@/assets/logo.png"> 		
 			<img  class="facePic-DS" src="@/assets/face-recognition2.png"> 
 		</div>
@@ -8,7 +8,12 @@
 </template>
 <script>
 	export default {
-	  name: 'facerecognition-page'
+	  name: 'facerecognition-page',
+	  methods: {
+	    handleClick () {
+	      this.$router.replace('/outsourcee/homepage/task')
+	    }
+	  }
 	}
 </script>
 <style>

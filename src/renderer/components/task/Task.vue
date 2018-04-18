@@ -33,7 +33,7 @@
 export default {
   data () {
     return {
-      inChargeTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '考勤管理系统', percentage: 20, color: '#f33232'}],
+      inChargeTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '考勤管理系统', percentage: 20, color: '#f33232'}, {name: '演示用任务', percentage: 0, color: '#f33232'}],
       inTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '考勤管理系统', percentage: 10, color: '#f33232'}, {name: '众包旅游向导平台', percentage: 60, color: '#3f95ce'}, {name: 'Vehicle Pro', percentage: 30, color: '#dac606'}, {name: '厦门大学校园助手', percentage: 70, color: '#3f95ce'}, {name: '智能机器人', percentage: 20, color: '#f33232'}, {name: '办公自动化系统', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 0, color: '#f33232'}]
     }
   },
