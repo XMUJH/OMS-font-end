@@ -19,15 +19,16 @@
       <div style="height:150px; overflow:auto">
         <el-upload
           class="upload-demo"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://localhost:8080/upload/"
           :on-preview="handlePreview"
           :on-remove="handleRemove"
+          :before-upload="beforeUpload"
           :before-remove="beforeRemove"
           multiple
           :limit="5"
           :on-exceed="handleExceed"
           :file-list="fileList">
-            <el-button size="small" type="primary" v-if="userRole=='incharge'">点击上传</el-button>
+            <el-button size="small" type="primary" v-if="userRole=='incharge'">选择文件</el-button>
             <div slot="tip" class="el-upload__tip" v-if="userRole=='incharge'">只能上传rar/zip文件，且不超过500mb</div>
         </el-upload>
       </div>
@@ -79,6 +80,18 @@
       },
       beforeRemove (file, fileList) {
         return this.$confirm(`确定移除 ${file.name}？`)
+      },
+      beforeUpload: function (file) {
+        console.log(file)
+        // 这里是重点，将文件转化为formdata数据上传
+        let fd = new FormData()
+        fd.append('file', file)
+        this.$http.post('http://localhost:8080/upload/', fd).then(function (response) {
+          if (response.data.code === 403) return true
+        }).catch(function (error) {
+          alert('上传成功')
+          console.log(error.toString())
+        })
       }
     },
     props: ['userRole']
