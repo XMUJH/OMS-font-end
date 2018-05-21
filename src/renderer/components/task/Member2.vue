@@ -49,27 +49,27 @@
         activeName: 'fifth',
         input: '',
         tableData: [{
-          pic: '/static/photo-ds.png',
+          pic: 'static/photo-ds.png',
           name: '邓帅',
           job: '项目负责人',
           check: 1
         }, {
-          pic: '/static/photo-ct.jpg',
+          pic: 'static/photo-ct.jpg',
           name: '陈童',
           job: 'UI设计',
           check: 1
         }, {
-          pic: '/static/photo-hjh.jpg',
+          pic: 'static/photo-hjh.jpg',
           name: '胡江海',
           job: '研发工程师',
           check: 2
         }, {
-          pic: '/static/photo-zyp.jpg',
+          pic: 'static/photo-zyp.jpg',
           name: '张渝萍',
           job: '研发工程师',
           check: 3
         }, {
-          pic: '/static/photo-dhd.jpg',
+          pic: 'static/photo-dhd.jpg',
           name: '邓荟丹',
           job: '研发工程师',
           check: 3

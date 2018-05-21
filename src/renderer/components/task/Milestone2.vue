@@ -72,8 +72,8 @@
 
       <div style="margin-left:2%;overflow:auto" v-if="condition==1">
         <div style="height:30px">
-          <span class="CheckTime">2018/2/12</span>
-          <span>已通过</span>
+          <span class="CheckTime">2018/4/19</span>
+          <span>未通过</span>
         </div>
 
         <div style="height:30px">

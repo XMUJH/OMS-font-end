@@ -32,7 +32,7 @@
 	  methods: {
 	    handleClick () {
 	      if (this.input0 === 'admin') this.$router.replace('/contractee/homePage/task')
-	      if (this.input0 === '2432015') this.$router.replace('/outsourcee/homePage/task')
+	      if (this.input0 === '2432015') this.$router.replace('/facerecognition')
 	    }
 	  }
 	}

@@ -11,7 +11,7 @@
   </g>
 </g></g> </svg>
 </router-link>
-<img  class="searchbar-avatar" src="/static/photo-ds2.png">
+<img  class="searchbar-avatar" src="static/photo-ds2.png">
   </el-header>
 </template>
 

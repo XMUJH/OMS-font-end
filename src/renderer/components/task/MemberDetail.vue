@@ -1,7 +1,7 @@
 <template>
     <el-main class="maincontent">
       <div style="margin-left:4%;margin-top:3%;width:90%;height:100px">
-        <img src="/static/photo-ds.png" style="height:80px">
+        <img src="static/photo-ds.png" style="height:80px">
       </div>
 
       <div style="width:180;height:50px">

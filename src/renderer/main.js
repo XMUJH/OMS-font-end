@@ -33,7 +33,7 @@ if (!process.env.IS_WEB) {
   Vue.use(draggable)
   Vue.component('draggable', draggable)
 }
-Vue.http = Vue.prototype.$http = axios
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
