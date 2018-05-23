@@ -11,7 +11,7 @@
 					<el-input type="password" v-model="input1" placeholder="密码"></el-input>
 				</div>
 				<div class="login-group">
-						<el-button type="primary" @click='handleClick'>登录</el-button>
+						<el-button type="primary" @click='login'>登录</el-button>
 				</div>
 				<div class="login-group">
 					<p class="login-group-tips">第一次登录？点击注册</p>
@@ -21,6 +21,7 @@
 	</div>
 </template>
 <script>
+	
 	export default {
 	  name: 'login-page',
 	  data () {
@@ -30,9 +31,28 @@
 	    }
 	  },
 	  methods: {
-	    handleClick () {
-	      if (this.input0 === 'admin') this.$router.replace('/contractee/homePage/task')
-	      if (this.input0 === '2432015') this.$router.replace('/facerecognition')
+	    login () {
+	    	var that=this;
+	    	console.log(JSON.stringify({
+	    		"account":this.input0,
+	    		"password":this.input1
+	    	}))
+	    	this.$http.post(
+	    		HOST + '/login', 
+	    		JSON.stringify({
+	    			"account":this.input0,
+	    		  "password":this.input1
+	    		}),
+	    		{headers: {'Content-Type': 'application/json;charset=utf-8'}}
+	    		).then(function (response){
+	    			console.log(123)
+	    		console.log(response)
+	    		that.$router.replace('/facerecognition')
+	    	}).catch(function (error) {
+	    		console.log(456)
+    			console.log(error);
+  });
+
 	    }
 	  }
 	}

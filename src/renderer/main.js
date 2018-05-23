@@ -35,6 +35,7 @@ if (!process.env.IS_WEB) {
 }
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
+global.HOST='http://localhost:8080'
 
 /* eslint-disable no-new */
 new Vue({
