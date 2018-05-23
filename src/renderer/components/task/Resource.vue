@@ -3,9 +3,6 @@
       <div style="width:50%; height:50px">
         <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
-      <object type="application/pdf" data="http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf"
-           id="review" style="width:800px;  height:750px; margin-top:45px;  margin-left:500px" v-if="showPDF==true">
-      </object>
       <el-table
         :data="tableData"
         border
@@ -57,7 +54,6 @@
     data () {
       return {
         input: '',
-        showPDF: false,
         tableData: [{
           date: '2018-04-03',
           name: '需求规格说明模板',
@@ -96,8 +92,7 @@
         document.body.appendChild(iframe)
       },
       checkResource () {
-        // window.open("http://localhost:8080/传输测试.jpg")
-        this.showPDF = true
+        window.open("static/pdf/web/viewer.html?file=http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf")
       }
     }
   }
