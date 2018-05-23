@@ -87,7 +87,7 @@
         let fd = new FormData()
         fd.append('file', file)
         this.$http.post('http://localhost:8080/upload/', fd).then(function (response) {
-          if (response.data.code === 403) return true
+          console.log(response)
         }).catch(function (error) {
           alert('上传成功')
           console.log(error.toString())

@@ -26,11 +26,13 @@
   "dependencies": {
     "axios": "^0.16.1",
     "element-ui": "^2.3.0",
-    "v-contextmenu": "^2.5.0",
+    "v-contextmenu": "^2.6.0",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
+    "vue-pdf": "^3.3.1",
     "vue-router": "^2.5.3",
     "vuedraggable": "^2.16.0",
+    "vueshowpdf": "^1.1.2",
     "vuex": "^2.3.1"
   },
   "devDependencies": {

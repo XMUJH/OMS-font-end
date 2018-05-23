@@ -7,3 +7,6 @@ npm-debug.log
 npm-debug.log.*
 thumbs.db
 !.gitkeep
+.vs/OMS-font-end/v15/.suo
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite

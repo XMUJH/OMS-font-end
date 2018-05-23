@@ -1,5 +1,6 @@
 <template>
     <el-main class="maincontent">
+      <pdf src="static/cns.pdf"></pdf>
       <div style="width:50%; height:50px">
         <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
@@ -38,8 +39,8 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button type="text" size="small">查看</el-button>
-              <el-button type="text" size="small">下载</el-button>
+              <el-button type="text" size="small" @click="checkResource()">查看</el-button>
+              <el-button type="text" size="small" @click="downloadResource()">下载</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -49,11 +50,13 @@
 </template>
 
 <script>
+  import pdf from 'vue-pdf'
   export default {
     name: 'resource',
     data () {
       return {
         input: '',
+        showPDF: false,
         tableData: [{
           date: '2018-04-03',
           name: '需求规格说明模板',
@@ -80,6 +83,24 @@
           level: 'D'
         }]
       }
-    }
+    },
+    methods: {
+      downloadResource () {
+        let iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = 'http://localhost:8080/download/'
+        iframe.onload = function () {
+          document.body.removeChild(iframe)
+        }
+        document.body.appendChild(iframe)
+      },
+      checkResource () {
+        // window.open("http://localhost:8080/传输测试.jpg")
+        this.showPDF = true
+      }
+    },
+  　components: {
+    　pdf
+  　}
   }
 </script>

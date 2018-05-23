@@ -38,9 +38,11 @@
       		vm.timer=setInterval(function(){ 
       			vm.photo();
       		},1000)
+      		console.log(vm.timer)
       	},
       	photo(){
       		let vm=this;
+      		//console.log(vm.timer)
       		let context=vm.canvas.getContext('2d')
       		context.drawImage(vm.video,0,0,400,400)
       		//导出base64格式的图片数据  
@@ -51,9 +53,12 @@
 			    var fd = new FormData(); 
 			    fd.append('img', blob)
 			    this.$http.post(HOST+'/facerecognition', fd).then(function (response) {
-			    	console.log(response)
-			    	clearInterval(vm.timer)
-			    	vm.track.stop()
+			    	if(response.data==1){
+				    	console.log("success")
+				    	console.log(response)
+				    	clearInterval(vm.timer)
+				    	vm.track.stop()
+			    	}
 			    }).catch(function (error) {
 			    	console.log(error.toString())
 			    })
@@ -92,7 +97,7 @@ body{
 	text-align: center;
 }
 .facePic-DS{
-	/*display: none;*/
+	display: none;
 	position: fixed;
 	right:0;
 	top:40px;
