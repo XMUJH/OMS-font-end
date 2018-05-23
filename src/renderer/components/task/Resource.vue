@@ -1,11 +1,9 @@
 <template>
     <el-main class="maincontent">
+      <pdf src="static/cns.pdf"></pdf>
       <div style="width:50%; height:50px">
         <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
-      <object type="application/pdf" data="http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf"
-           id="review" style="width:800px;  height:750px; margin-top:45px;  margin-left:500px" v-if="showPDF==true">
-      </object>
       <el-table
         :data="tableData"
         border
@@ -52,6 +50,7 @@
 </template>
 
 <script>
+  import pdf from 'vue-pdf'
   export default {
     name: 'resource',
     data () {
@@ -99,6 +98,9 @@
         // window.open("http://localhost:8080/传输测试.jpg")
         this.showPDF = true
       }
-    }
+    },
+  　components: {
+    　pdf
+  　}
   }
 </script>
