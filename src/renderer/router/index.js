@@ -16,7 +16,7 @@ export default new Router({
       component: require('@/components/page/registerPage').default
     },
     {
-      path: '/facerecognition',
+      path: '/faceRecognition',
       name: 'facerecognition-page',
       component: require('@/components/page/FaceRecognitionPage').default
     },
