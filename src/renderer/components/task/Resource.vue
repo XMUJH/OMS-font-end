@@ -1,6 +1,5 @@
 <template>
     <el-main class="maincontent">
-      <pdf src="static/cns.pdf"></pdf>
       <div style="width:50%; height:50px">
         <el-input placeholder="搜索资源" size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
@@ -50,7 +49,6 @@
 </template>
 
 <script>
-  import pdf from 'vue-pdf'
   export default {
     name: 'resource',
     data () {
@@ -98,9 +96,6 @@
         // window.open("http://localhost:8080/传输测试.jpg")
         this.showPDF = true
       }
-    },
-  　components: {
-    　pdf
-  　}
+    }
   }
 </script>

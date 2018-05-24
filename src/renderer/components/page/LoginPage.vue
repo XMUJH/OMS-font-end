@@ -32,7 +32,6 @@
 	  },
 	  methods: {
 	    login () {
-	    	var that=this;
 	    	console.log(JSON.stringify({
 	    		"account":this.input0,
 	    		"password":this.input1
@@ -44,13 +43,21 @@
 	    		  "password":this.input1
 	    		}),
 	    		{headers: {'Content-Type': 'application/json;charset=utf-8'}}
-	    		).then(function (response){
+	    		).then(response => {
+	    			console.log(response)
+	    			/*if(response.code==403){
+	    				alert("用户名密码错误")
+	    			}else{
 	    			console.log(123)
 	    		console.log(response)
-	    		that.$router.replace('/facerecognition')
-	    	}).catch(function (error) {
+	    		var userId=response.data.id;
+	    		that.$router.replace({ path: '/facerecognition', query: { userId: userId }})
+	    	}*/
+	    	}).catch(error => {
 	    		console.log(456)
-    			console.log(error);
+    			console.log(error.response);
+    			if(error.code==403)
+    				alert("用户名密码错误")
   });
 
 	    }

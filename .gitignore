@@ -10,3 +10,4 @@ thumbs.db
 .vs/OMS-font-end/v15/.suo
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
+src/renderer/components/task/Resource.vue
