@@ -14,13 +14,13 @@
     </el-header>
     <div class="profile-main">
       <div class="profile-head">    
-       <img class="avatar" alt="头像" src="static/photo-ds2.png">
-       <span class="profile-title">邓帅</span>
+       <img class="avatar" alt="头像" v-bind:src="url">
+       <span class="profile-title">{{user.name}}</span>
      </div>
      <div class="table">
        <div class="row">
         <span class="tdname">账号</span>
-        <span>609490912@qq.com</span>
+        <span>{{user.account}}</span>
       </div>
       <div class="row">
         <span class="tdname">账号密码</span>
@@ -29,7 +29,7 @@
       </div>
       <div class="row">
         <span class="tdname">联系方式</span>
-        <span>18859272731</span>
+        <span>{{user.phone}}</span>
       </div>
       <div class="row">
         <span class="tdname">人脸信息</span>
@@ -37,15 +37,15 @@
       </div class="row">
       <div class="row">
         <span class="tdname">用户名</span>
-        <span>用户XXX</span>
+        <span>{{user.name}}</span>
       </div>
       <div class="row">
         <span class="tdname">所属公司</span>
-        <span>江南软件公司</span>
+        <span>{{user.company.name}}</span>
       </div>
       <div class="row">
         <span class="tdname">电子邮箱</span>
-        <span>609490912@qq.com</span>
+        <span>{{user.email}}</span>
       </div>
     </div>
   </div>
@@ -57,9 +57,28 @@
     name: 'profile-page',
     data () {
       return {
+        user:{},
+        url:'',
       }
     },
-    method: {
+    mounted(){
+      this.init()
+    },
+    methods: {
+      init(){
+        let userId=localStorage.getItem('userId')
+        this.$http.get(HOST+'/user/'+userId)
+        .then(response=>{
+          console.log(response)
+          if(response.status==200){
+            this.user=response.data
+            console.log(this.user)
+            this.url=HOST+'/'+this.user.photoUrl
+            console.log(url)
+          }
+        })
+        .catch(error=>{});
+      },
       handleClick (event) {
         this.$router.push({path: '/'})
       }
@@ -79,7 +98,7 @@
 }
 .profile-title{
   float: left;
-  padding:40px;
+  padding:50px 20px;
   text-align: center;
   font-size: 28px;
   font-family: sans-serif;
@@ -105,12 +124,11 @@
 }
 .profile-container{
   margin-top:20px;
+  margin-left: 20px;
 }
 .avatar{
   width:100px;
-  height:100px;
   float: left;
-  border-radius: 100px;
 }
 .searchbar{
   position: fixed;
