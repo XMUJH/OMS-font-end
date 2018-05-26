@@ -38,7 +38,6 @@
       		vm.timer=setInterval(function(){ 
       			vm.photo();
       		},1000)
-      		console.log(vm.timer)
       	},
       	photo(){
       		let vm=this;
@@ -52,7 +51,11 @@
 			    //组装formdata  
 			    var fd = new FormData(); 
 			    fd.append('img', blob)
-			    this.$http.post(HOST+'/facerecognition', fd).then(function (response) {
+			    console.log(123)
+			    console.log(this.$route)
+			    
+
+			    this.$http.post(HOST+'/faceRecognition/'+vm.$route.params.userId, fd).then(function (response) {
 			    	if(response.data==1){
 				    	console.log("success")
 				    	console.log(response)
@@ -86,8 +89,12 @@
 body{
 	width: 100%;
 	height:100%;
-	//background: url(../../assets/face-recognition.png)no-repeat;
+	background: url(../../assets/face-recognition.png)no-repeat;
 	background-size:100% 100%; 	
+}
+video{
+	background: url(../../assets/face-recognition2.png);
+	background-size: 450px 450px;
 }
 .faceRec-DS{
 	padding-left: 120px;

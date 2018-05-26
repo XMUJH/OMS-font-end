@@ -5,13 +5,14 @@
 			<h3 class="title">虹 软·外 包 管 理 平 台</h3> 					
 			<form class="login-horizontal">
 				<div class="login-group">
-					<el-input v-model="input0" placeholder="用户名"></el-input>
+					<el-input ref="username" v-model="input0" placeholder="用户名"></el-input>
 				</div>
 				<div class="login-group">
-					<el-input type="password" v-model="input1" placeholder="密码"></el-input>
+					<el-input ref="password" type="password" v-model="input1" placeholder="密码"></el-input>
+					<label id="hint" style="display:block;height:20px;color:red;font-size: 12px;"></label>
 				</div>
 				<div class="login-group">
-						<el-button type="primary" @click='login'>登录</el-button>
+					<el-button type="primary" @click='login'>登录</el-button>
 				</div>
 				<div class="login-group">
 					<p class="login-group-tips">第一次登录？点击注册</p>
@@ -23,40 +24,45 @@
 <script>
 	
 	export default {
-	  name: 'login-page',
-	  data () {
-	    return {
-	      input0: '',
-	      input1: ''
-	    }
-	  },
-	  methods: {
-	    login () {
-	    	var that=this;
-	    	console.log(JSON.stringify({
-	    		"account":this.input0,
-	    		"password":this.input1
-	    	}))
-	    	this.$http.post(
-	    		HOST + '/login', 
-	    		JSON.stringify({
-	    			"account":this.input0,
-	    		  "password":this.input1
-	    		}),
-	    		{headers: {'Content-Type': 'application/json;charset=utf-8'}}
-	    		).then(function (response){
-	    			console.log(123)
-	    		console.log(response)
-	    		that.$router.replace('/facerecognition')
-	    	}).catch(function (error) {
-	    		console.log(456)
-    			console.log(error);
-  });
+		name: 'login-page',
+		data () {
+			return {
+				input0: '',
+				input1: ''
+			}
+		},
+		methods: {
+			login () {
+				console.log(JSON.stringify({
+					"account":this.input0,
+					"password":this.input1
+				}))
+				this.$http.post(
+					HOST + '/login', 
+					JSON.stringify({
+						"account":this.input0,
+						"password":this.input1
+					}),
+					{headers: {'Content-Type': 'application/json;charset=utf-8'}}
+					).then(response => {
+						console.log(response)
+						var userId=response.data.id
+						this.$router.replace({ name:'facerecognition-page',params:{userId}})
+					}).catch(error => {
+						if (error.response.data.code == 403) {
+							var label=document.getElementById("hint");
+							label.innerHTML=error.response.data.message
+							this.$refs.username.$el.querySelector('input').focus();
+							this.input0=''
+							this.input1=''
 
-	    }
-	  }
-	}
-</script>
+						}
+					});
+
+				}
+			}
+		}
+	</script>
 </script>
 <style>
 .login{

@@ -45,7 +45,7 @@ export default {
         this.$http.post(
           HOST + '/users/2/tasks', 
           JSON.stringify({
-            "userTaskRole":"LEADER"
+            "choice":"LEADER"
           }),
           {headers: {'Content-Type': 'application/json;charset=utf-8'}}
           ).then(function (response){
