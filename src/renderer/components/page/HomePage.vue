@@ -14,7 +14,8 @@ export default {
     return {
       input: '',
       firstBread: '',
-      userRole: ''
+      userRole: '',
+      userId: ''
     }
   },
   methods: {

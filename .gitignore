@@ -11,3 +11,6 @@ thumbs.db
 .vs/VSWorkspaceState.json
 .vs/slnx.sqlite
 src/renderer/components/task/Resource.vue
+*.properties
+*.properties
+*.properties

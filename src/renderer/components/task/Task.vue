@@ -8,8 +8,8 @@
                         <v-contextmenu-item @click="edit">编辑里程碑</v-contextmenu-item>
                 </v-contextmenu>
                 <div class="el-scrollbar">
-                    <div class="task" v-for="item in inChargeTasks" :taskName=item.name @click="detail1($event)" v-contextmenu:contextmenuTaskMini>
-                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
+                    <div class="task" v-for="item in inChargeTasks" :taskName=item.name :taskId=item.id @click="detail1($event)" v-contextmenu:contextmenuTaskMini>
+                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.taskColor width=80></el-progress>
                         <p class="taskText">{{item.name}}</p>
                     </div>
                     <div class="task">
@@ -20,8 +20,8 @@
                 </div>
                 <el-row class="myEl-Row"><font class="el-rowText">我参与的任务</font></el-row>
                 <div class="el-scrollbar">
-                    <div class="task" v-for="item in inTasks" :taskName=item.name @click="detail2($event)">
-                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
+                    <div class="task" v-for="item in inTasks" :taskName=item.name :taskId=item.id @click="detail2($event)">
+                        <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.taskColor width=80></el-progress>
                         <p class="taskText">{{item.name}}</p>
                     </div>
                 </div>
@@ -31,13 +31,46 @@
 
 <script>
 export default {
+  mounted() {
+    this.init()
+  },
   data () {
     return {
-      inChargeTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '考勤管理系统', percentage: 20, color: '#f33232'}, {name: '演示用任务', percentage: 0, color: '#f33232'}],
-      inTasks: [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '考勤管理系统', percentage: 10, color: '#f33232'}, {name: '众包旅游向导平台', percentage: 60, color: '#3f95ce'}, {name: 'Vehicle Pro', percentage: 30, color: '#dac606'}, {name: '厦门大学校园助手', percentage: 70, color: '#3f95ce'}, {name: '智能机器人', percentage: 20, color: '#f33232'}, {name: '办公自动化系统', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 0, color: '#f33232'}]
+      inChargeTasks: [],
+      inTasks: []
     }
   },
   methods: {
+    init() {
+        var vm=this;
+        this.$http.post(          
+          HOST + '/users/2/tasks', 
+          JSON.stringify({
+            "choice":"LEADER"
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            vm.inChargeTasks=response.data
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+        });
+        this.$http.post(          
+          HOST + '/users/2/tasks', 
+          JSON.stringify({
+            "choice":"FOLLOWER"
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            vm.inTasks=response.data
+            console.log(vm.inTasks)
+          }).catch(error=>{
+         // console.log(456)
+            console.log(error);
+        });  
+    },
     open1 () {
       this.$prompt('请输入授权码', '提示', {
         confirmButtonText: '确定',
@@ -56,11 +89,18 @@ export default {
       })
     },
     detail1 (event) {
+      //this.$router.replace('/outsourcee/homePage/task/detail/progress/')
+      var taskId = event.currentTarget.getAttribute('taskId')
+      localStorage.setItem('taskId',taskId)
+      //this.$router.replace({ name:'test',params:{taskId}})
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
       this.$emit('changeUserRole', 'incharge')
     },
     detail2 (event) {
+      var taskId = event.currentTarget.getAttribute('taskId')
+      localStorage.setItem('taskId',taskId)
+      //console.log(taskId)
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
       this.$emit('changeUserRole', 'participate')
