@@ -75,6 +75,7 @@
 
 <script>
 export default {
+  name: 'task2',
   data () {
     return {
       layers: [],
@@ -109,11 +110,12 @@ export default {
       this.$router.replace('/contractee/homePage/task/addTask')
     }
   },
-  props: ['newTask'],
   created: function () {
-    if (this.newTask !== '') {
-      this.allTasks.push(this.newTask)
-    }
+    this.$http.get('http://localhost:8080/projects/-1/projects').then(function (response) {
+          console.log(response)
+        }).catch(function (error) {
+          console.log(error.toString())
+        })
   }
 }
 </script>

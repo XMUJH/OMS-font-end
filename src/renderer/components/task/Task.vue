@@ -68,7 +68,12 @@ export default {
     edit (vm, event) {
       this.$router.replace('/outsourcee/homePage/task/edittask/')
     }
-  }
+  },
+  created: function () {
+    let vm = this
+    this.$emit('addUserId', vm.$route.params.userId)
+  },
+  props: ['userId']
 }
 </script>
 <style>

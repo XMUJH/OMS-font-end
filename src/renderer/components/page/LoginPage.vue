@@ -24,44 +24,42 @@
 <script>
 	
 	export default {
-		name: 'login-page',
-		data () {
-			return {
-				input0: '',
-				input1: ''
-			}
-		},
-		methods: {
-			login () {
-				console.log(JSON.stringify({
-					"account":this.input0,
-					"password":this.input1
-				}))
-				this.$http.post(
-					HOST + '/login', 
-					JSON.stringify({
-						"account":this.input0,
-						"password":this.input1
-					}),
-					{headers: {'Content-Type': 'application/json;charset=utf-8'}}
-					).then(response => {
-						console.log(response)
-						var userId=response.data.id
-						this.$router.replace({ name:'facerecognition-page',params:{userId}})
-					}).catch(error => {
-						if (error.response.data.code == 403) {
-							var label=document.getElementById("hint");
-							label.innerHTML=error.response.data.message
-							this.$refs.username.$el.querySelector('input').focus();
-							this.input0=''
-							this.input1=''
-
-						}
-					});
-
-				}
-			}
-		}
+	  name: 'login-page',
+	  data () {
+	    return {
+	      input0: '',
+	      input1: ''
+	    }
+	  },
+	  methods: {
+	    login () {
+	      console.log(JSON.stringify({
+	        'account': this.input0,
+	        'password': this.input1
+	      }))
+	      this.$http.post(
+	        HOST + '/login',
+	        JSON.stringify({
+	          'account': this.input0,
+	          'password': this.input1
+	        }),
+	        {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+	      ).then(response => {
+	        console.log(response)
+	        var userId = response.data.id
+	        this.$router.replace({ name: 'facerecognition-page', params: {userId}})
+	      }).catch(error => {
+	        if (error.response.data.code == 403) {
+	          var label = document.getElementById('hint')
+          label.innerHTML = error.response.data.message
+	          this.$refs.username.$el.querySelector('input').focus()
+	          this.input0 = ''
+	          this.input1 = ''
+	        }
+	      })
+	    }
+	  }
+	}
 	</script>
 </script>
 <style>

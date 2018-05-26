@@ -10,16 +10,16 @@
 <script>
 	
 	export default {
-		name: 'facerecognition-page',
-		mounted(){
-			this.init()
-		},
-		methods: {
-			init(){
-				var video=document.getElementById("video") 
-				//var context=canvas.getContext("2d")
-				let vm = this
-				let context = canvas.getContext('2d')
+	  name: 'facerecognition-page',
+	  mounted () {
+	    this.init()
+	  },
+	  methods: {
+	    init () {
+	      var video = document.getElementById('video')
+	      // var context=canvas.getContext("2d")
+	      let vm = this
+	      let context = canvas.getContext('2d')
       		// 浏览器兼容
       		let mediaDevices = navigator.mediaDevices.getUserMedia({ audio: false, video })
       		mediaDevices
@@ -28,36 +28,35 @@
       			video.onloadedmetadata = (e) => {
       				video.play()
       			}
-      			vm.canvas=canvas
+      			vm.canvas = canvas
       			vm.video = video
       			vm.track = mediaStream.getTracks()[0]
       		})
       		.catch(err => {
       			console.log('err.message' + err.name)
       		})
-      		vm.timer=setInterval(function(){ 
-      			vm.photo();
-      		},1000)
+      		vm.timer = setInterval(function () {
+      			vm.photo()
+      		}, 1000)
       	},
-      	photo(){
-      		let vm=this;
-      		//console.log(vm.timer)
-      		let context=vm.canvas.getContext('2d')
-      		context.drawImage(vm.video,0,0,400,400)
-      		//导出base64格式的图片数据  
-      		var imgData = vm.canvas.toDataURL("image/jpg");
-      		//封装blob对象  
-      		var blob = vm.dataURItoBlob(imgData);  
-			    //组装formdata  
-			    var fd = new FormData(); 
-			    fd.append('img', blob)
+      	photo () {
+      		let vm = this
+      		// console.log(vm.timer)
+      		let context = vm.canvas.getContext('2d')
+      		context.drawImage(vm.video, 0, 0, 400, 400)
+      		// 导出base64格式的图片数据
+      		var imgData = vm.canvas.toDataURL('image/jpg')
+      		// 封装blob对象
+      		var blob = vm.dataURItoBlob(imgData)
+		    // 组装formdata
+		    var fd = new FormData()
+		    fd.append('img', blob)
 			    console.log(123)
 			    console.log(this.$route)
-			    
-
-			    this.$http.post(HOST+'/faceRecognition/'+vm.$route.params.userId, fd).then(function (response) {
-			    	if(response.data==1){
-				    	console.log("success")
+	
+			    this.$http.post(HOST + '/faceRecognition/' + vm.$route.params.userId, fd).then(function (response) {
+			    	if (response.data == 1) {
+				    	console.log('success')
 				    	console.log(response)
 				    	clearInterval(vm.timer)
 				    	vm.track.stop()
@@ -66,22 +65,16 @@
 			    	console.log(error.toString())
 			    })
 			  },
-			  dataURItoBlob (base64Data) {  
-			  	var byteString;  
-			  	if (base64Data.split(',')[0].indexOf('base64') >= 0)  
-			  		byteString = atob(base64Data.split(',')[1]);  
-			  	else  
-			  		byteString = unescape(base64Data.split(',')[1]);  
-			  	var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];  
-			  	var ia = new Uint8Array(byteString.length);  
-			  	for (var i = 0; i < byteString.length; i++) {  
-			  		ia[i] = byteString.charCodeAt(i);  
-			  	}  
-			  	return new Blob([ia], {type: mimeString});  
-			  },
-			  handleClick () {
-	      //this.$router.replace('/outsourcee/homepage/task')
-	    }
+			  dataURItoBlob (base64Data) {
+			  	var byteString
+		  	if (base64Data.split(',')[0].indexOf('base64') >= 0) { byteString = atob(base64Data.split(',')[1]) } else { byteString = unescape(base64Data.split(',')[1]) }
+			  	var mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0]
+		  	var ia = new Uint8Array(byteString.length)
+		  	for (var i = 0; i < byteString.length; i++) {
+			  		ia[i] = byteString.charCodeAt(i)
+		  	}
+			  	return new Blob([ia], {type: mimeString})
+		  }
 	  }
 	}
 </script>

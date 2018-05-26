@@ -92,7 +92,7 @@
         document.body.appendChild(iframe)
       },
       checkResource () {
-        window.open("static/pdf/web/viewer.html?file=http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf")
+        window.open('static/pdf/web/viewer.html?file=http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf')
       }
     }
   }

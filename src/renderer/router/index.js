@@ -93,6 +93,7 @@ export default new Router({
       children: [
         {
           path: 'task',
+          name: 'task2',
           component: require('@/components/task/task2').default
         },
         {
