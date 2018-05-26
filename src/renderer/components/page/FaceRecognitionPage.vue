@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="facecontent">
 		<div class="faceRec-DS" @click="handleClick">
 			<img  class="logo-DS" src="@/assets/logo.png"> 	<video id="video" autoplay="" width="400" height="400"></video>  
 			<canvas id="canvas" class="facePic-DS" width="400" height="400"></canvas>
@@ -82,7 +82,7 @@
 	}
 </script>
 <style>
-.content{
+.facecontent{
 	width: 100%;
 	height:100%;
 	background: url(../../assets/face-recognition.png)no-repeat;

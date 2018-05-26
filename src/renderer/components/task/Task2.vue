@@ -5,7 +5,7 @@
           <el-main class="maincontent" style="margin-top: 105px;">
                 <el-breadcrumb separator-class="el-icon-arrow-right" style="height:30px">
                     <el-breadcrumb-item :to="{ path: '/contractee/homePage/task' }" @click.native="brush">所有项目</el-breadcrumb-item>
-                    <el-breadcrumb-item v-for="item in layers">{{item}}</el-breadcrumb-item>
+                    <el-breadcrumb-item style="cursor:pointer" v-for="item in layers" :taskId=item.id :breadName=item.name @click.native="jump">{{item.name}}</el-breadcrumb-item>
                 </el-breadcrumb>
                 <div class="el-scrollbar" style="height:500px">
                    <v-contextmenu ref="contextmenuProject" theme="bright">
@@ -45,7 +45,7 @@
                         </v-contextmenu-submenu>
                   </v-contextmenu>
                   <draggable :move="getdata" @update="datadragEnd">
-                        <div class="task" v-for="item in allProjects" :taskName=item.name v-contextmenu:contextmenuProject @dblclick="getIn($event)">
+                        <div class="task" v-for="item in allProjects" :taskId=item.id :taskName=item.name v-contextmenu:contextmenuProject @dblclick="getIn($event)">
                             <div class="progress-bar">
                                 <div class="progress-bar_toper"></div>
                                 <div class="progress-bar_outer">
@@ -55,7 +55,7 @@
                             </div>
                             <font class="taskText2">{{item.name}}</font>
                         </div>
-                        <div class="task" v-for="item in allTasks" :taskName=item.name @click="detail($event)" v-contextmenu:contextmenuTask>
+                        <div class="task" v-for="item in allTasks" :taskId=item.id :taskName=item.name @click="detail($event)" v-contextmenu:contextmenuTask>
                           <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
                           <p class="taskText">{{item.name}}</p>
                         </div>
@@ -79,8 +79,8 @@ export default {
   data () {
     return {
       layers: [],
-      allProjects: [{name: '互联网+', percentage: '100%', height: '81%'}, {name: '服务外包', percentage: '10%', height: '8%'}],
-      allTasks: [{name: 'Vehicle Pro', percentage: 80, color: '#2cd64d'}, {name: '厦门大学校园助手', percentage: 10, color: '#f33232'}, {name: '众包旅游向导平台', percentage: 60, color: '#3f95ce'}, {name: '中间件设计', percentage: 30, color: '#dac606'}, {name: '智能机器人', percentage: 70, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}, {name: '前背景智能分离技术', percentage: 80, color: '#2cd64d'}, {name: '办公自动化系统', percentage: 0, color: '#f33232'}, {name: '演示用任务', percentage: 0, color: '#f33232'}]
+      allProjects: [],
+      allTasks: []
     }
   },
   methods: {
@@ -89,34 +89,230 @@ export default {
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
     },
     getIn (event) {
-      this.layers.push(event.currentTarget.getAttribute('taskName'))
-      this.allProjects = [{name: '吴清强老师项目', percentage: '80%', height: '64%'}]
-      this.allTasks = [{name: '今目标平台', percentage: 20, color: '#f33232'}, {name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '验证码识别', percentage: 0, color: '#f33232'}]
+      this.layers.push({
+        name: event.currentTarget.getAttribute('taskName'),
+        id: event.currentTarget.getAttribute('taskId')
+      })
+      this.$emit('changeProjectId', event.currentTarget.getAttribute('taskId'))
+      this.projectId=event.currentTarget.getAttribute('taskId')
+      this.allProjects=[]
+      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allProjects.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+              height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
+    this.allTasks=[]
+    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allTasks.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: response.data[i].percentage,
+              color: response.data[i].taskColor
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
     },
     getdata (evt) {
-      console.log(evt.draggedContext.element.id)
     },
     datadragEnd (evt) {
       console.log('拖动前的索引 :' + evt.oldIndex)
       console.log('拖动后的索引 :' + evt.newIndex)
-      console.log(this.tags)
+      if(evt.newIndex<=this.allProjects.length-1)
+      {
+        // 项目拖入项目
+        if(evt.oldIndex<=this.allProjects.length-1)
+        {
+          var target={
+            id: this.allProjects[evt.newIndex].id
+          }
+          this.$http.patch('http://localhost:8080/projects/'+this.allProjects[evt.oldIndex].id+'/', target).then(response=> {
+            this.allProjects=[]
+            this.allTasks=[]
+            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+            for(var i=0;i<response.data.length;i++)
+            {
+              this.allProjects.push({
+                id: response.data[i].id,
+                name: response.data[i].name,
+                percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+                height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+              })
+            }
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+          this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+            for(var i=0;i<response.data.length;i++)
+            {
+              this.allTasks.push({
+                id: response.data[i].id,
+                name: response.data[i].name,
+                percentage: response.data[i].percentage,
+                color: response.data[i].taskColor
+              })
+            }
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+        }
+        else// 任务拖进项目
+        {
+          var target={
+            id: this.allProjects[evt.newIndex].id
+          }
+          this.$http.patch('http://localhost:8080/tasks/'+this.allTasks[evt.oldIndex-this.allProjects.length].id+'/', target).then(response=> {
+            this.allProjects=[]
+            this.allTasks=[]
+            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+            for(var i=0;i<response.data.length;i++)
+            {
+              this.allProjects.push({
+                id: response.data[i].id,
+                name: response.data[i].name,
+                percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+                height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+              })
+            }
+            }).catch(error=> {
+              console.log(error.toString())
+            })
+            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+            for(var i=0;i<response.data.length;i++)
+            {
+              this.allTasks.push({
+                id: response.data[i].id,
+                name: response.data[i].name,
+                percentage: response.data[i].percentage,
+                color: response.data[i].taskColor
+              })
+            }
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+        }
+      }
     },
     brush () {
-      this.allProjects = [{name: '互联网+', percentage: '100%', height: '81%'}, {name: '服务外包', percentage: '10%', height: '8%'}]
-      this.allTasks = [{name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 10, color: '#f33232'}, {name: '智能外包管理平台', percentage: 60, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 30, color: '#dac606'}, {name: '智能外包管理平台', percentage: 70, color: '#3f95ce'}, {name: '智慧家居平台', percentage: 20, color: '#f33232'}, {name: '智能外包管理平台', percentage: 80, color: '#2cd64d'}, {name: '智慧家居平台', percentage: 0, color: '#f33232'}]
+      this.allProjects = []
+      this.allTasks = []
       this.layers = []
+      this.projectId=-1
+      this.$emit('changeProjectId',-1)
+      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allProjects.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+              height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
+      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allTasks.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: response.data[i].percentage,
+              color: response.data[i].taskColor
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
+    },
+    jump (evt) {
+      for(;;)
+      {
+        if(this.layers[this.layers.length-1].name!=evt.currentTarget.getAttribute('breadName'))
+          this.layers.pop()
+        else break
+      }
+      this.projectId=evt.currentTarget.getAttribute('taskId')
+      this.$emit('changeProjectId',evt.currentTarget.getAttribute('taskId'))
+      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allProjects.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+              height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
+      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allTasks.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: response.data[i].percentage,
+              color: response.data[i].taskColor
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
     },
     addTask () {
       this.$router.replace('/contractee/homePage/task/addTask')
     }
   },
   created: function () {
-    this.$http.get('http://localhost:8080/projects/-1/projects').then(function (response) {
-          console.log(response)
-        }).catch(function (error) {
+    if(this.projectId=='') this.projectId=-1;
+    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allProjects.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
+              height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
+            })
+          }
+        }).catch(error=> {
           console.log(error.toString())
         })
-  }
+    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+          for(var i=0;i<response.data.length;i++)
+          {
+            this.allTasks.push({
+              id: response.data[i].id,
+              name: response.data[i].name,
+              percentage: response.data[i].percentage,
+              color: response.data[i].taskColor
+            })
+          }
+        }).catch(error=> {
+          console.log(error.toString())
+        })
+  },
+  props: ['projectId']
 }
 </script>
 <style>

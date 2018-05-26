@@ -2,7 +2,6 @@
   
     <el-main class="maincontent">
       <div style="width:50%;height:10%;margin:0 0 10px 0;">
-        <el-input placeholder="搜索资源"  size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
       </div>
 
       <el-table :data="tableData3" height="400" borderstyle="width: 100%" header-cell-style="color:#000000;background-color:#f3f3f3">
