@@ -47,6 +47,7 @@
 					).then(response => {
 						console.log(response)
 						var userId=response.data.id
+						localStorage.setItem('userId',userId)
 						this.$router.replace({ name:'facerecognition-page',params:{userId}})
 					}).catch(error => {
 						if (error.response.data.code == 403) {

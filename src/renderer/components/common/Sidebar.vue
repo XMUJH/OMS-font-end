@@ -14,7 +14,7 @@
      <hr v-if="currentPart==2" class="leftLine"/>
    </div>
    <div class="leftCombine">
-    <router-link to="/outsourcee/homePage/profile">
+    <router-link :to="{name:'outsourcee-profile',params:{userId:userId}}">
      <el-button type="text" class="leftTextButton" v-on:click="currentPart=3">个人信息</el-button>
    </router-link>
    <hr v-if="currentPart==3" class="leftLine"/>
@@ -30,6 +30,13 @@
         currentPart: 1
       }
     },
+    computed: {
+    userId () {
+      // 我们很快就会看到 `params` 是什么
+      return localStorage.getItem('userId')
+    }
+  },
+
     methods: {
       goTo: function (path) {
         this.$router.replace(path)

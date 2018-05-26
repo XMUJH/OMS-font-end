@@ -5,23 +5,22 @@
       </div>
       <el-table
         :data="tableData"
-        border
-        style="width: 700px;overflow:auto">
+        stripe=true
+        style="width:800px;overflow:auto">
           <el-table-column
-            fixed
             prop="date"
             label="日期"
             width="120">
           </el-table-column>
           <el-table-column
             prop="name"
-            label="名称"
-            width="150">
+            label="资源名称"
+            width="200">
           </el-table-column>
           <el-table-column
             prop="type"
             label="格式"
-            width="120">
+            width="130">
           </el-table-column>
           <el-table-column
             prop="size"
@@ -31,19 +30,18 @@
           <el-table-column
             prop="level"
             label="安全等级"
-            width="300">
+            width="100">
           </el-table-column>
           <el-table-column
             fixed="right"
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="checkResource()">查看</el-button>
+              <el-button v-if="scope.row.type=='pdf'||scope.row.type=='txt'||scope.row.type=='jpg'||scope.row.type=='png'" type="text" size="small" @click="checkResource(scope.$index)">查看</el-button>
               <el-button type="text" size="small" @click="downloadResource()">下载</el-button>
             </template>
           </el-table-column>
       </el-table>
-
     </el-main>
  
 </template>
@@ -54,35 +52,33 @@
     data () {
       return {
         input: '',
-        tableData: [{
-          date: '2018-04-03',
-          name: '需求规格说明模板',
-          type: 'doc',
-          size: '19.3k',
-          level: 'A'
-        }, {
-          date: '2018-04-03',
-          name: '虹软人脸识别API使用手册',
-          type: 'pdf',
-          size: '69.3k',
-          level: 'B'
-        }, {
-          date: '2016-05-02',
-          name: '详细设计说明书模板',
-          type: 'doc',
-          size: '19.3k',
-          level: 'C'
-        }, {
-          date: '2016-05-01',
-          name: '代码规范',
-          type: 'doc',
-          size: '19.3k',
-          level: 'D'
-        }]
+        tableData: []
       }
     },
-    methods: {
-      downloadResource () {
+    mounted(){
+    this.init()
+  },
+  methods:{
+    init(){
+      var vm=this
+      var taskId=1
+      this.$http.get(HOST+'/tasks/'+taskId+'/resources').then(response=>{
+        console.log(response.data)
+        response.data.forEach(e=>{
+          console.log(e)
+          var resource={
+            date:e.commit.substr(0,10),
+            name:e.name,
+            type:e.type,
+            size:e.size,
+            level:e.safety
+          }
+          vm.tableData.push(resource);
+        });
+      }).catch(error=>{
+      });
+    },
+    downloadResource () {
         let iframe = document.createElement('iframe')
         iframe.style.display = 'none'
         iframe.src = 'http://localhost:8080/download/'
@@ -91,9 +87,14 @@
         }
         document.body.appendChild(iframe)
       },
-      checkResource () {
-        window.open("static/pdf/web/viewer.html?file=http://localhost:8080/taskfile/第九届大赛决赛报到须知.pdf")
+      checkResource (index) {
+        if(this.tableData[index].type=='pdf'){
+          window.open("static/pdf/web/viewer.html?file="+HOST+"/resource/"+this.tableData[index].name+".pdf")
+        }else{
+          console.log(this.tableData[index].name)
+          window.open(HOST+"/resource/"+this.tableData[index].name+"."+this.tableData[index].type)
+        }
       }
-    }
+  }
   }
 </script>

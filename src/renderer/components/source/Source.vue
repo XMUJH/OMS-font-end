@@ -3,56 +3,131 @@
 		<el-container>
 			<searchbar :showContent='"请输入要查询的资源名称"'></searchbar>
 			<el-main class="maincontent" style="margin-top: 105px;">
-				<div class="source-title">
-					<el-row>
-					  <el-col :span="12"><div class="grid-content">资源名称</div></el-col>
-					  <el-col :span="12"><div class="grid-content">所属任务</div></el-col>
-				  </el-row>
-				</div>
-				<div class="source-item"v-for="item in sourcelist">
-				<el-row>
-					<el-col :span="12"><div class="grid-content">{{item.name}}</div></el-col>
-					<el-col :span="12"><div class="grid-content">{{item.task}}</div></el-col>
-				</el-row>
-				</div>
-			</el-main>
-		</el-container>
-	</div>
+			<el-table
+        :data="tableData"
+        stripe=true
+        style="width:800px;overflow:auto">
+          <el-table-column
+            prop="date"
+            label="日期"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="资源名称"
+            width="160">
+          </el-table-column>
+          <el-table-column
+            prop="task"
+            label="所属任务"
+            width="120">
+          </el-table-column>
+          <el-table-column
+            prop="type"
+            label="格式"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="size"
+            label="大小"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            prop="level"
+            label="安全等级"
+            width="100">
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="100">
+            <template slot-scope="scope">
+              <el-button v-if="scope.row.type=='pdf'||scope.row.type=='txt'||scope.row.type=='jpg'||scope.row.type=='png'" type="text" size="small" @click="checkResource(scope.$index)">查看</el-button>
+              <el-button type="text" size="small" @click="downloadResource()">下载</el-button>
+            </template>
+          </el-table-column>
+      </el-table>
+		</el-main>
+	</el-container>
+</div>
 </template>
 <script>
-export default {
-  name: 'source-page',
-  data () {
-    return {
-      sourcelist: [{name: '需求规格说明书模板', task: '智能外包管理平台'}, {name: '虹软人脸识别API使用手册', task: '智能外包管理平台'}, {name: '详细设计说明书模板', task: '智能外包管理平台'}, {name: '代码规范', task: '智能外包管理平台'}]
-    }
-  }
+	export default {
+		name: 'source-page',
+		data () {
+			return {
+				input: '',
+        tableData: []
+		}
+	},
+	mounted(){
+		this.init()
+	},
+	methods:{
+		init(){
+			var vm=this
+			var userId=localStorage.getItem('userId')
+			this.$http.get(HOST+'/users/'+userId+'/resources').then(response=>{
+				console.log(response.data)
+				response.data.forEach(e=>{
+					console.log(e)
+					var resource={
+						date:e.resource.commit.substr(0,10),
+						name:e.resource.name,
+						task:e.task.name,
+						type:e.resource.type,
+						size:e.resource.size,
+						level:e.resource.safety
+					}
+					vm.tableData.push(resource);
+			  });
+			}).catch(error=>{
+			});
+		},
+		downloadResource () {
+        let iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = 'http://localhost:8080/download/'
+        iframe.onload = function () {
+          document.body.removeChild(iframe)
+        }
+        document.body.appendChild(iframe)
+      },
+      checkResource (index) {
+      	if(this.tableData[index].type=='pdf'){
+        	window.open("static/pdf/web/viewer.html?file="+HOST+"/resource/"+this.tableData[index].name+".pdf")
+        }else{
+        	console.log(this.tableData[index].name)
+					window.open(HOST+"/resource/"+this.tableData[index].name+"."+this.tableData[index].type)
+        }
+      }
+	}
 }
 </script>
 <style>
 .source-title{
-  padding:5px 0;
-  height:20px;
-  background-color: #d3dce6;
-  margin-bottom: 10px;
+	padding:5px 0;
+	height:20px;
+	background-color: #d3dce6;
+	margin-bottom: 10px;
 }
 .source-item{
 	padding:20px 0;
-  border: 1px solid #eee;
-  margin-bottom: 10px;
+	border: 1px solid #eee;
+	margin-bottom: 10px;
 }
 .source-item:hover{
 	padding:20px 0;
-  border: 1px solid #e51c23;
-  margin-bottom: 10px;
+	border: 1px solid #e51c23;
+	margin-bottom: 10px;
 }
 .el-col {
-  	padding-left: 10px;
+	padding-left: 10px;
 }
 
 .grid-content {
-  border-radius: 4px;
-  min-height: 36px;
+	border-radius: 4px;
+	min-height: 36px;
 }
 
 </style>

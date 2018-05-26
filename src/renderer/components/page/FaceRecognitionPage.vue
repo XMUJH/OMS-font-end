@@ -1,5 +1,5 @@
 <template>
-	<div class="content">
+	<div class="facecontent">
 		<div class="faceRec-DS" @click="handleClick">
 			<img  class="logo-DS" src="@/assets/logo.png"> 	<video id="video" autoplay="" width="400" height="400"></video>  
 			<canvas id="canvas" class="facePic-DS" width="400" height="400"></canvas>
@@ -60,9 +60,9 @@
 				    	vm.track.stop()
 				    	var userId=vm.$route.params.userId;
 				    	if(response.data.userRole=='RECEIVER')
-				    		this.$router.replace({ name:'outsourcee-task',params:{userId}})
+				    		this.$router.replace({ name:'outsourcee',params:{userId}})
 				    	else
-				    		this.$router.replace({ name:'contractee-task',params:{userId}})
+				    		this.$router.replace({ name:'contractee',params:{userId}})
 			    	}
 			    }).catch(error=>{
 			    	console.log(error.toString())
@@ -88,7 +88,7 @@
 	}
 </script>
 <style>
-.content{
+.facecontent{
 	width: 100%;
 	height:100%;
 	background: url(../../assets/face-recognition.png)no-repeat;

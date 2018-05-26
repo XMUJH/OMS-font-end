@@ -26,7 +26,7 @@ export default new Router({
     },
     {
       path: '/outsourcee/homePage',
-      name: 'home-page',
+      name: 'outsourcee',
       redirect: '/outsourcee/homePage/task',
       component: require('@/components/page/homePage').default,
       children: [
@@ -41,7 +41,8 @@ export default new Router({
           component: require('@/components/source/source').default
         },
         {
-          path: 'profile',
+          path: 'profile/:userId',
+          name: 'outsourcee-profile',
           component: require('@/components/profile/profile').default
         },
         {
@@ -90,7 +91,8 @@ export default new Router({
     },
     {
       path: '/contractee/homePage',
-      name: 'home-page2',
+      name: 'contractee',
+      redirect: '/contractee/homePage/task',
       component: require('@/components/page/homePage2').default,
       children: [
         {
