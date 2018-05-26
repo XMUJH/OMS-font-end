@@ -8,7 +8,6 @@
 	</div>
 </template>
 <script>
-	
 	export default {
 		name: 'facerecognition-page',
 		mounted(){
@@ -53,16 +52,19 @@
 			    fd.append('img', blob)
 			    console.log(123)
 			    console.log(this.$route)
-			    
-
-			    this.$http.post(HOST+'/faceRecognition/'+vm.$route.params.userId, fd).then(function (response) {
-			    	if(response.data==1){
-				    	console.log("success")
-				    	console.log(response)
+			    this.$http.post(HOST+'/faceRecognition/'+vm.$route.params.userId, fd).then(response=>{
+			    	console.log("success")
+				    console.log(response)
+			    	if(response.data.success ===true){
 				    	clearInterval(vm.timer)
 				    	vm.track.stop()
+				    	var userId=vm.$route.params.userId;
+				    	if(response.data.userRole=='RECEIVER')
+				    		this.$router.replace({ name:'outsourcee-task',params:{userId}})
+				    	else
+				    		this.$router.replace({ name:'contractee-task',params:{userId}})
 			    	}
-			    }).catch(function (error) {
+			    }).catch(error=>{
 			    	console.log(error.toString())
 			    })
 			  },
@@ -86,7 +88,7 @@
 	}
 </script>
 <style>
-body{
+.content{
 	width: 100%;
 	height:100%;
 	background: url(../../assets/face-recognition.png)no-repeat;
