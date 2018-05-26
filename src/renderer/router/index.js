@@ -72,6 +72,7 @@ export default new Router({
             },
             {
               path: 'memberdetail',
+              name: 'memberdetail',
               component: require('@/components/task/memberdetail').default
             },
             {

@@ -92,6 +92,7 @@ export default {
       //this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       var taskId = event.currentTarget.getAttribute('taskId')
       localStorage.setItem('taskId',taskId)
+      localStorage.setItem('userId',2)
       //this.$router.replace({ name:'test',params:{taskId}})
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
