@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
         <div class="sidebar"><sidebar></sidebar></div>
-        <div class="main"><router-view :firstBread="firstBread" :userRole="userRole" @changeFirstBread="getFirstBread" @changeUserRole="getUserRole"></router-view></div>
+        <div class="main"><router-view :firstBread="firstBread" :userRole="userRole" :userId="userId" @changeFirstBread="getFirstBread" @changeUserRole="getUserRole" @addUserId="getUserId"></router-view></div>
     </el-container>
   </div>
 </template>
@@ -14,7 +14,8 @@ export default {
     return {
       input: '',
       firstBread: '',
-      userRole: ''
+      userRole: '',
+      userId: ''
     }
   },
   methods: {
@@ -23,6 +24,9 @@ export default {
     },
     getUserRole (msg) {
       this.userRole = msg
+    },
+    getUserId (msg) {
+      this.userId = msg
     }
   }
 }
