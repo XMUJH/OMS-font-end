@@ -51,7 +51,8 @@
                 <el-tag size="medium" style="color:red">{{ scope.row.status }}</el-tag>
               </div>
             </el-popover>
-            <el-tag v-if="scope.row.status!='未通过'" size="medium">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status==='已提交'" size="medium">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status==='已通过'" style="color:green" size="medium">{{ scope.row.status }}</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -96,12 +97,20 @@
       },
       init(){
         this.$http.get(
+          HOST + '/milestones/' + localStorage["milestoneId"],
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(response.data);
+            this.info = response.data.info;
+            this.endtime = response.data.endTime.slice(0,10);
+          }).catch(error=>{
+            console.log(error);
+          });
+        this.$http.get(
           HOST + '/milestones/' + localStorage["milestoneId"] + '/milestoneHistories',
           {headers: {'Content-Type': 'application/json;charset=utf-8'}}
           ).then(response=>{
             //console.log(response.data);
-            this.info = response.data[0].milestone.info;
-            this.endtime = response.data[0].milestone.endTime.slice(0,10);
             for(var i=response.data.length-1;i>=0;i--)
             {
               var sta;
