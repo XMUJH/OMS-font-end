@@ -24,19 +24,19 @@
 
         <el-table-column label="审核情况">
           <template slot-scope="scope">
-            <span v-if="scope.row.check=== 1">已通过</span>
-            <span v-if="scope.row.check=== 2" style="color: red">添加待审核</span>
-            <span v-if="scope.row.check=== 3" style="color: red">删除待审核</span>
-            <span v-if="scope.row.check=== 4" style="color: red">审核没通过</span>
+            <span v-if="scope.row.check=== 'NORMAL'">已通过</span>
+            <span v-if="scope.row.check=== 'ADD_CHECK'" style="color: red">添加待审核</span>
+            <span v-if="scope.row.check=== 'DELETE_CHECK'" style="color: red">删除待审核</span>
+            <span v-if="scope.row.check=== 'NOTPASS'" style="color: red">审核没通过</span>
           </template>
         </el-table-column>
 
         <el-table-column label="操作" width=120>
           <template slot-scope="scope">
-            <el-button v-if="scope.row.check=== 2" type="success" icon="el-icon-check" circle @click="open_DS0(tableData,scope.$index,$event)"/>
-            <el-button v-if="scope.row.check=== 2" type="danger" icon="el-icon-error" circle @click="open_DS1(tableData,scope.$index,$event)"/>
-            <el-button v-if="scope.row.check=== 3" type="success" icon="el-icon-check" circle @click="open_DS0(tableData,scope.$index,$event)"/>
-            <el-button v-if="scope.row.check=== 3" type="danger" icon="el-icon-error" circle @click="open_DS1(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 'ADD_CHECK'" type="success" icon="el-icon-check" circle @click="open_DS0(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 'ADD_CHECK'" type="danger" icon="el-icon-error" circle @click="open_DS1(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 'DELETE_CHECK'" type="success" icon="el-icon-check" circle @click="open_DS2(tableData,scope.$index,$event)"/>
+            <el-button v-if="scope.row.check=== 'DELETE_CHECK'" type="danger" icon="el-icon-error" circle @click="open_DS3(tableData,scope.$index,$event)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -44,53 +44,93 @@
 </template>
 <script>
   export default {
+    mounted() {
+      this.init()
+    },  
     data () {
       return {
         activeName: 'fifth',
         input: '',
-        tableData: [{
-          pic: 'static/photo-ds.png',
-          name: '邓帅',
-          job: '项目负责人',
-          check: 1
-        }, {
-          pic: 'static/photo-ct.jpg',
-          name: '陈童',
-          job: 'UI设计',
-          check: 1
-        }, {
-          pic: 'static/photo-hjh.jpg',
-          name: '胡江海',
-          job: '研发工程师',
-          check: 2
-        }, {
-          pic: 'static/photo-zyp.jpg',
-          name: '张渝萍',
-          job: '研发工程师',
-          check: 3
-        }, {
-          pic: 'static/photo-dhd.jpg',
-          name: '邓荟丹',
-          job: '研发工程师',
-          check: 3
-        }]
+        tableData: []
       }
     },
     methods: {
+      init() {
+        this.$http.get(          
+          HOST + '/tasks/' + localStorage["taskId"] + '/users', 
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            var me = localStorage["userId"]
+            for(var i=0;i<response.data.length;i++){
+              if(response.data[i].user.id == me)
+              {
+                this.tableData.push({
+                  id:response.data[i].user.id,
+                  pic:global.HOST+'/'+response.data[i].user.photoUrl,
+                  name:response.data[i].user.name+'（我）',
+                  job:response.data[i].job,
+                  check:response.data[i].status,
+                  role:response.data[i].userTaskRole,
+                  account:response.data[i].user.account,
+                  company:response.data[i].user.company.name,
+                  phone:response.data[i].user.phone,
+                  Email:response.data[i].user.email
+                })
+                break
+              }
+            }
+            for(var i=0;i<response.data.length;i++){
+              if(response.data[i].user.id != me)
+              {
+                this.tableData.push({
+                  id:response.data[i].user.id,
+                  pic:global.HOST+'/'+response.data[i].user.photoUrl,
+                  name:response.data[i].user.name,
+                  job:response.data[i].job,
+                  check:response.data[i].status,
+                  role:response.data[i].userTaskRole,
+                  account:response.data[i].user.account,
+                  company:response.data[i].user.company.name,
+                  phone:response.data[i].user.phone,
+                  Email:response.data[i].user.email
+                })
+              }
+            }
+          }).catch(error=>{
+            console.log(error);
+        });
+      },
+
       handleClick (event) {
         this.$router.push({path: '/contractee/homePage/task/detail/memberdetail'})
       },
+
       open_DS0 (rows, index, event) {
         event.stopPropagation()
-        this.$confirm('确定通过审核', '提示', {
+        this.$confirm('确定添加成员', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '审核通过'
+            message: '添加成功'
           })
-          rows[index].check = 1
+          rows[index].check = 'NORMAL'
+          this.$http.patch(          
+          HOST + '/tasks/'+localStorage["taskId"]+'/users/'+rows[index].id, 
+          JSON.stringify({
+            "choice":"NORMAL"
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+          });
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -108,7 +148,82 @@
             type: 'success',
             message: '审核完成'
           })
-          rows[index].check = 4
+          this.$http.delete(          
+          HOST + '/tasks/'+localStorage["taskId"]+'/users/'+rows[index].id,
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+          });
+          rows.splice(index,1)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消审核'
+          })
+        })
+      },
+      open_DS2 (rows, index, event) {
+        event.stopPropagation()
+        this.$confirm('确定删除成员', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          this.$http.delete(          
+          HOST + '/tasks/'+localStorage["taskId"]+'/users/'+rows[index].id,
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+          });
+          rows.splice(index,1)
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消审核'
+          })
+        })
+      },
+      open_DS3 (rows, index, event) {
+        event.stopPropagation()
+        this.$confirm('不通过此次人员变动？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '审核完成'
+          })
+          rows[index].check = 'NORMAL'
+          this.$http.patch(          
+          HOST + '/tasks/'+localStorage["taskId"]+'/users/'+rows[index].id, 
+          JSON.stringify({
+            "choice":"NORMAL"
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+          });
         }).catch(() => {
           this.$message({
             type: 'info',
