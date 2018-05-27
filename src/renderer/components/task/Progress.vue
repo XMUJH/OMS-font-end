@@ -42,13 +42,13 @@
 				</el-row>
 
 				<div style="height:40px">
-					<span style="font-size:20px;font-weight:bold">详细设计</span>
-					<span style="font-size:18px;font-weight:bold;color:#E41541">未通过</span>
+					<span style="font-size:20px;font-weight:bold">{{name}}</span>
+					<span style="font-size:18px;font-weight:bold;color:#E41541">{{status}}</span>
 				</div>
 
-				<div>
+				<div v-if="status==='未通过'">
 					<span style="font-size:20px;font-weight:bold">原因：</span>
-					<span style="font-size:13px;font-weight:bold">数据库设计过于复杂</span>
+					<span style="font-size:13px;font-weight:bold">{{reason}}</span>
 				</div>
 			</div>
 			</el-main>
@@ -65,7 +65,10 @@ export default {
       activeName: 'first',
       completion: '',
       taskGoal: '',
-      task:[]
+      task:[],
+      name:'',
+      status:'',
+      reason:''
     }
   },
   methods: {
@@ -100,7 +103,7 @@ export default {
             		ico = 'el-icon-warning'
             	else if(response.data[i].status=="NOTBEGIN")
             		ico = 'el-icon-time'
-            	console.log(ico)
+            	//console.log(ico)
             	this.task.push({
             		id:response.data[i].id,
             		title:response.data[i].name,
@@ -115,11 +118,31 @@ export default {
           }).catch(error=>{
             console.log(error);
         });
+        this.$http.get(          
+          HOST + '/tasks/' + localStorage["taskId"] + '/milestoneHistory', 
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            //console.log(response.data)
+            vm.name = response.data.milestone.name
+            var sta;
+              if (response.data.status == -1)
+                sta = '未通过'
+              else if (response.data.status == 0)
+                sta = '已提交'
+              else if (response.data.status == 1)
+                sta = '已通过'
+            vm.status = sta
+            vm.reason = response.data.reason
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            console.log(error);
+        });  
     },
     handleClick (event) {
-    	var a = event.currentTarget.getAttribute('id')
+    	//var a = event.currentTarget.getAttribute('id')
       localStorage.setItem('milestoneId',event.currentTarget.getAttribute('id'))
-      console.log(a)
+     // console.log(a)
       this.$router.push({path: '/outsourcee/homePage/task/detail/milestone'})
       this.$emit('changeThirdBread', event.currentTarget.getAttribute('titleName'))
     } 
@@ -137,7 +160,7 @@ export default {
 /*任务目标下的一块空间*/
 .MissionGoal {
   width:100%;
-  height:80px;
+  height:20px;
 }
 
 /*里程碑进度下面的提示符*/

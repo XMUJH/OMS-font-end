@@ -4,17 +4,17 @@
       <el-row class="myEl-Row">
         <font class="el-rowText">里程碑目标</font>
       </el-row>
-      <p>界面能够轻松吸引用户眼球并使之具有实效性、灵活性、风格多样性、易操作性。以功能实现为基础的界面设计。交互设计界面最基本的性能是具有功能性与使用性，通过界面设计，让用户明白功能操作，并将作品本身的信息更加顺畅的传递给使用者，即用户，是功能界面存在的基础与价值，但由于用户的知识水平和文化背景具有差异性，因此界面应以更国际化，客观化的体现作品本身的信息。</p>
-      <div style="height:20px"></div>
+      <p>{{info}}</p>
+      <div style="height:10px"></div>
 
       <el-row class="myEl-Row">
         <font class="el-rowText">截止日期</font>
       </el-row>
-      <p>2018年4月20日</p>
-      <div style="height:20px"></div>
+      <p>{{endtime}}</p>
+      <div style="height:10px"></div>
 
       <el-row class="myEl-Row">
-        <font class="el-rowText">查看成果</font>
+        <font class="el-rowText">上传成果</font>
       </el-row>
       <div style="height:150px; overflow:auto">
         <el-upload
@@ -37,37 +37,39 @@
         <font class="el-rowText">审核进程</font>
       </el-row>
 
-      <div style="margin-left:2%;overflow:auto">
-        <div style="height:30px">
-          <span class="CheckTime">2018/4/18</span>
-          <span>未通过</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/4/17</span>
-          <span>第二次提交</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/4/1</span>
-          <span>未通过</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/4/1</span>
-          <span>第一次提交</span>
-        </div>
-
-      </div>
+      <el-table :data="tableData" :show-header='false' max-height="200" style="width: 100%">
+        <el-table-column label="日期" width="180">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px;color:#a5a5a5">{{ scope.row.time }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态"  width="180">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.status==='未通过'" trigger="hover" placement="top">
+              <p>原因: {{ scope.row.reason }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium" style="color:red">{{ scope.row.status }}</el-tag>
+              </div>
+            </el-popover>
+            <el-tag v-if="scope.row.status!='未通过'" size="medium">{{ scope.row.status }}</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
 
     </el-main>
 </template>
 
 <script>
   export default {
+    mounted(){
+      this.init()
+    },
     data () {
       return {
-        fileList: []
+        info:'',
+        endtime:'',
+        fileList: [],
+        tableData: []
       }
     },
     methods: {
@@ -91,9 +93,36 @@
         }).catch(function (error) {
           console.log(error.toString())
         })
-      }
+      },
+      init(){
+        this.$http.get(
+          HOST + '/milestones/' + localStorage["milestoneId"] + '/milestoneHistories',
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(response.data);
+            this.info = response.data[0].milestone.info;
+            this.endtime = response.data[0].milestone.endTime.slice(0,10);
+            for(var i=response.data.length-1;i>=0;i--)
+            {
+              var sta;
+              if (response.data[i].status == -1)
+                sta = '未通过'
+              else if (response.data[i].status == 0)
+                sta = '已提交'
+              else if (response.data[i].status == 1)
+                sta = '已通过'
+              this.tableData.push({
+                time: response.data[i].createTime.slice(0,10),
+                status: sta,
+                reason: response.data[i].reason
+              })
+            }
+          }).catch(error=>{
+            console.log(error);
+          });
+      },
     },
-    props: ['userRole']
+    props:['userRole']
   }
 </script>
 
