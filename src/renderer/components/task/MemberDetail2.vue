@@ -1,45 +1,76 @@
 <template>
     <el-main class="maincontent">
-
       <div style="margin-left:4%;margin-top:3%;width:90%;height:100px">
-        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1523536608980&di=b26485e16e2445f986cd2ee9aa4521d4&imgtype=0&src=http%3A%2F%2Fwww.youstyle.com.cn%2Fupload%2F20150922%2F201509221057033505.jpg" style="height:80px">
+        <img :src="pic" style="height:80px">
       </div>
 
       <div style="width:180;height:50px">
-        <span class="descriptionOne">陈丽萍</span>
-        <span class="descriptionTwo">项目负责人</span>
+        <span class="descriptionOne">{{name}}</span>
+        <span class="descriptionTwo">{{job}}</span>
       </div>
 
       <div style="width:40%;height:20px;float:left;">
         <el-row class="myEl-Row_Two">
-          <font>用户名</font>
+          <font>账号</font>
         </el-row>
-        <span class="descriptionThree">陈丽萍</span>
+        <span class="descriptionThree">{{account}}</span>
       </div>
 
       <div style="width:40%;height:20%;float:left;">
         <el-row class="myEl-Row_Two">
           <font>所属公司</font>
         </el-row>
-        <span class="descriptionThree">江南软件公司</span>
+        <span class="descriptionThree">{{company}}</span>
       </div>
 
       <div style="width:40%;height:20%;float:left;">
         <el-row class="myEl-Row_Two">
           <font>联系方式</font>
         </el-row>
-        <span class="descriptionThree">14329380002</span>
+        <span class="descriptionThree">{{phone}}</span>
       </div>
 
       <div style="width:40%;height:20%;float:left;">
         <el-row class="myEl-Row_Two">
           <font>电子邮箱</font>
         </el-row>
-        <span class="descriptionThree">43433434@qq.com</span>
+        <span class="descriptionThree">{{Email}}</span>
       </div>
 
     </el-main>
 </template>
+
+
+
+<script>
+  export default {
+    mounted() {
+      this.init()
+    },  
+    data () {
+      return {
+        pic:'',
+        name:'',
+        job:'',
+        account:'',
+        company:'',
+        phone:'',
+        Email:''
+      }
+    },
+    methods: {
+      init() {
+        this.pic = this.$route.params.user.pic,
+        this.name = this.$route.params.user.name.split('（')[0],
+        this.job = this.$route.params.user.job,
+        this.account = this.$route.params.user.account,
+        this.company = this.$route.params.user.company,
+        this.phone = this.$route.params.user.phone,
+        this.Email = this.$route.params.user.Email
+      }
+    }
+  }
+</script>
 
 <style>
   .descriptionOne {

@@ -28,12 +28,27 @@
 				</div>
 
 				<div style="height:25%;margin:20px 0 60px;">
-					<el-steps :active="1" align-center>
-						<el-step style="cursor:pointer" titleName='需求分析' title="需求分析" description="2018/4/18" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
+					<el-steps :active="completion" align-center>
+						<el-step v-for="item in task" style="cursor:pointer" :id=item.id :title=item.title :description=item.des :icon=item.ic @click.native='handleClick($event)'></el-step>
+						<!--
 						<el-step style="cursor:pointer" titleName='详细设计' title="详细设计" description="2018/4/19" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
 						<el-step style="cursor:pointer" titleName='界面设计' title="界面设计" description="2018/4/20" icon="el-icon-warning" @click.native='handleClick($event)'></el-step>
-						<el-step style="cursor:pointer" titleName='数据库设计' title="数据库设计" description="2018/4/25" icon="el-icon-time" @click.native='handleClick($event)'></el-step>
+						<el-step style="cursor:pointer" titleName='数据库设计' title="数据库设计" description="2018/4/25" icon="el-icon-time" @click.native='handleClick($event)'></el-step>//-->
 					</el-steps>
+				</div>
+
+				<el-row class="myEl-Row">
+					<p class="el-rowText">审核情况</p>
+				</el-row>
+
+				<div style="height:40px">
+					<span style="font-size:20px;font-weight:bold">{{name}}</span>
+					<span style="font-size:18px;font-weight:bold;color:#E41541">{{status}}</span>
+				</div>
+
+				<div v-if="status==='未通过'">
+					<span style="font-size:20px;font-weight:bold">原因：</span>
+					<span style="font-size:13px;font-weight:bold">{{reason}}</span>
 				</div>
 			</div>
 			</el-main>
@@ -41,18 +56,96 @@
 
 <script>
 export default {
+  mounted() {
+    this.init()
+  },
   name: 'Task-page',
   data () {
     return {
       activeName: 'first',
-      taskGoal: '随着公司业务的发展以及在 AI 和人工智能领域的持续深入，需要把部分工作外包。外包可以更加有效的利用社会资源，优化资源利用率。但在外包实践中，我们遇到诸如任务跟踪，人员管理，资源访问控制的问题，我们希望能够有一套众包管理平台，更好的管理人员和任务。'
+      completion: '',
+      taskGoal: '',
+      task:[],
+      name:'',
+      status:'',
+      reason:''
     }
   },
   methods: {
+  	init() {
+  		let vm = this
+        //console.log(vm.$route.params.taskId)
+        //console.log(localStorage["taskId"])
+        this.$http.get(          
+          HOST + '/tasks/' + localStorage["taskId"], 
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            //console.log(response.data)
+            vm.taskGoal = response.data.info
+            vm.completion = response.data.completion
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            console.log(error);
+        });
+        this.$http.get(          
+          HOST + '/tasks/' + localStorage["taskId"] + '/milestones', 
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            console.log(response.data)
+            for(var i=0;i<response.data.length;i++)
+            {
+            	var ico;
+            	if (response.data[i].status=="PASS")
+            		ico = "el-icon-success"
+            	else if (response.data[i].status=="NOTPASS")
+            		ico = 'el-icon-warning'
+            	else if(response.data[i].status=="NOTBEGIN")
+            		ico = 'el-icon-time'
+            	//console.log(ico)
+            	this.task.push({
+            		id:response.data[i].id,
+            		title:response.data[i].name,
+            		des:response.data[i].endTime.slice(0,10),
+            		ic:ico
+            		
+            	})
+            }
+           //vm.taskGoal = response.data.info
+            //vm.completion = response.data.completion
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            console.log(error);
+        });
+        this.$http.get(          
+          HOST + '/tasks/' + localStorage["taskId"] + '/milestoneHistory', 
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            //console.log(response.data)
+            vm.name = response.data.milestone.name
+            var sta;
+              if (response.data.status == -1)
+                sta = '未通过'
+              else if (response.data.status == 0)
+                sta = '已提交'
+              else if (response.data.status == 1)
+                sta = '已通过'
+            vm.status = sta
+            vm.reason = response.data.reason
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            console.log(error);
+        });  
+    },
     handleClick (event) {
+    	//var a = event.currentTarget.getAttribute('id')
+      localStorage.setItem('milestoneId',event.currentTarget.getAttribute('id'))
+     // console.log(a)
       this.$router.push({path: '/contractee/homePage/task/detail/milestone'})
       this.$emit('changeThirdBread', event.currentTarget.getAttribute('titleName'))
-    }
+    } 
   }
 }
 </script>
@@ -67,7 +160,7 @@ export default {
 /*任务目标下的一块空间*/
 .MissionGoal {
   width:100%;
-  height:80px;
+  height:20px;
 }
 
 /*里程碑进度下面的提示符*/

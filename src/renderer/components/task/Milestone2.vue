@@ -4,21 +4,21 @@
       <el-row class="myEl-Row">
         <font class="el-rowText">里程碑目标</font>
       </el-row>
-      <p>随着公司业务的发展以及在 AI 和人工智能领域的持续深入，需要把部分工作外包。外包可以更加有效的利用社会资源，优化资源利用率。但在外包实践中，我们遇到诸如任务跟踪，人员管理，资源访问控制的问题，我们希望能够有一套众包管理平台，更好的管理人员和任务。</p>
+      <p>{{info}}</p>
       <div style="height:8%"></div>
 
       <el-row class="myEl-Row">
         <font class="el-rowText">截止日期</font>
       </el-row>
-      <p>2018年4月20日</p>
+      <p>{{endtime}}</p>
       <div style="height:8%"></div>
 
       <el-row class="myEl-Row">
         <font class="el-rowText">查看成果</font>
       </el-row>
-      <div style="height:200px; overflow:auto">
+      <div style="height:150px; overflow:auto">
           <el-table
-        :data="tableData"
+        :data="tableData" max-height="130" 
         border
         style="width: 700px;overflow:auto">
           <el-table-column
@@ -54,10 +54,11 @@
       </el-table>
       </div>
 
+<!--
       <el-row class="myEl-Row" v-if="condition==0">
         <font class="el-rowText">审核</font>
       </el-row>
-
+      
       <div style="margin-left:2%;overflow:auto" v-if="condition==0">
         <div style="width:90%;height:80px;display:flex;justify-content:center; align-items:center;">
             <el-button type="primary" round>通过</el-button>
@@ -65,36 +66,37 @@
             <el-button round @click="dialogShow=true">不通过</el-button>
         </div>
       </div>
+!-->
 
-      <el-row class="myEl-Row" v-if="condition==1">
+      <el-row class="myEl-Row">
         <font class="el-rowText">审核进程</font>
       </el-row>
 
-      <div style="margin-left:2%;overflow:auto" v-if="condition==1">
-        <div style="height:30px">
-          <span class="CheckTime">2018/4/19</span>
-          <span>未通过</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/2/11</span>
-          <span>第二次提交</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/2/1</span>
-          <span>未通过</span>
-        </div>
-
-        <div style="height:30px">
-          <span class="CheckTime">2018/1/31</span>
-          <span>第一次提交</span>
-        </div>
-
-        <div style="width:90%;height:80px;display:flex;justify-content:center; align-items:center;">
-            <el-button type="primary" round @click="condition=0">重新审核</el-button>
-        </div>
-       </div>
+      <el-table :data="tableData2" :show-header='false' max-height="200" style="width: 100%">
+        <el-table-column label="日期" width="130">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px;color:#a5a5a5">{{ scope.row.time }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态"  width="150">
+          <template slot-scope="scope">
+            <el-popover v-if="scope.row.status==='未通过'" trigger="hover" placement="top">
+              <p>原因: {{ scope.row.reason }}</p>
+              <div slot="reference" class="name-wrapper">
+                <el-tag size="medium" style="color:red">{{ scope.row.status }}</el-tag>
+              </div>
+            </el-popover>
+            <el-tag v-if="scope.row.status==='已提交'" size="medium">{{ scope.row.status }}</el-tag>
+            <el-tag v-if="scope.row.status==='已通过'" style="color:green" size="medium">{{ scope.row.status }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="审核"  width="120">
+          <template slot-scope="scope" v-if="scope.row.status=='已提交'&&scope.row.rank==1">
+            <el-button type="success" icon="el-icon-check" circle  />
+            <el-button type="danger" icon="el-icon-error" circle   @click="dialogShow=true"/>
+          </template>
+        </el-table-column>
+      </el-table>
 
       <el-dialog title="不通过的理由" :visible.sync="dialogShow">
                 <el-input v-model="input" auto-complete="off" type="textarea"></el-input>
@@ -109,8 +111,15 @@
 
 <script>
   export default {
+    mounted(){
+      this.init()
+    },
     data () {
       return {
+        info:'',
+        endtime:'',
+        fileList: [],
+        tableData: [],
         condition: 0,
         dialogShow: false,
         fileList: [],
@@ -134,10 +143,49 @@
           name: '需求规格说明1.0',
           type: 'doc',
           size: '19.3k'
-        }]
+        }],
+        tableData2:[{time:'2015-01-01',status:'已提交',reason:'',rank:1},{time:'2015-01-01',status:'未通过',reason:'aaa',rank:2},
+        {time:'2015-01-01',status:'已提交',reason:'',rank:3}]
       }
     },
     methods: {
+      init(){
+        this.$http.get(
+          HOST + '/milestones/' + localStorage["milestoneId"],
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(response.data);
+            this.info = response.data.info;
+            this.endtime = response.data.endTime.slice(0,10);
+          }).catch(error=>{
+            console.log(error);
+          });
+        this.$http.get(
+          HOST + '/milestones/' + localStorage["milestoneId"] + '/milestoneHistories',
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(response.data);
+            this.tableData2 = []
+            for(var i=response.data.length-1;i>=0;i--)
+            {
+              var sta;
+              if (response.data[i].status == -1)
+                sta = '未通过'
+              else if (response.data[i].status == 0)
+                sta = '已提交'
+              else if (response.data[i].status == 1)
+                sta = '已通过'
+              this.tableData2.push({
+                time: response.data[i].createTime.slice(0,10),
+                status: sta,
+                reason: response.data[i].reason,
+                rank: response.data.length-i
+              })
+            }
+          }).catch(error=>{
+            console.log(error);
+          });
+      },
       shenHe () {
         this.dialogShow = false
         this.condition = 1

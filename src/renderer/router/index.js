@@ -22,7 +22,7 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/outsourcee/homePage'
+      redirect: '/contractee/homePage'
     },
     {
       path: '/outsourcee/homePage',
@@ -144,6 +144,7 @@ export default new Router({
             },
             {
               path: 'memberdetail',
+              name: 'memberdetail2',
               component: require('@/components/task/memberdetail2').default
             },
             {

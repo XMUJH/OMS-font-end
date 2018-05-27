@@ -14,3 +14,4 @@ src/renderer/components/task/Resource.vue
 *.properties
 *.properties
 *.properties
+src/renderer/router/index.js
