@@ -102,7 +102,11 @@
       },
 
       handleClick (event) {
-        this.$router.push({path: '/contractee/homePage/task/detail/memberdetail'})
+        var user = event
+        console.log(user)
+        this.$router.replace({name: 'memberdetail2',params:{user}})
+        //console.log(event)
+        //this.$router.push({path: '/outsourcee/homePage/task/detail/memberdetail'})
       },
 
       open_DS0 (rows, index, event) {
