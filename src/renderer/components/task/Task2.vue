@@ -94,9 +94,10 @@ export default {
         id: event.currentTarget.getAttribute('taskId')
       })
       this.$emit('changeProjectId', event.currentTarget.getAttribute('taskId'))
+      this.$emit('changeLayersContent',this.layers)
       this.projectId=event.currentTarget.getAttribute('taskId')
       this.allProjects=[]
-      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+      this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allProjects.push({
@@ -110,7 +111,7 @@ export default {
           console.log(error.toString())
         })
     this.allTasks=[]
-    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+    this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allTasks.push({
@@ -137,10 +138,10 @@ export default {
           var target={
             id: this.allProjects[evt.newIndex].id
           }
-          this.$http.patch('http://localhost:8080/projects/'+this.allProjects[evt.oldIndex].id+'/', target).then(response=> {
+          this.$http.patch(HOST+'/projects/'+this.allProjects[evt.oldIndex].id+'/', target).then(response=> {
             this.allProjects=[]
             this.allTasks=[]
-            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+            this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
             for(var i=0;i<response.data.length;i++)
             {
               this.allProjects.push({
@@ -153,7 +154,7 @@ export default {
           }).catch(error=> {
             console.log(error.toString())
           })
-          this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+          this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
             for(var i=0;i<response.data.length;i++)
             {
               this.allTasks.push({
@@ -175,10 +176,10 @@ export default {
           var target={
             id: this.allProjects[evt.newIndex].id
           }
-          this.$http.patch('http://localhost:8080/tasks/'+this.allTasks[evt.oldIndex-this.allProjects.length].id+'/', target).then(response=> {
+          this.$http.patch(HOST+'/tasks/'+this.allTasks[evt.oldIndex-this.allProjects.length].id+'/', target).then(response=> {
             this.allProjects=[]
             this.allTasks=[]
-            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+            this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
             for(var i=0;i<response.data.length;i++)
             {
               this.allProjects.push({
@@ -191,7 +192,7 @@ export default {
             }).catch(error=> {
               console.log(error.toString())
             })
-            this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+            this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
             for(var i=0;i<response.data.length;i++)
             {
               this.allTasks.push({
@@ -216,7 +217,8 @@ export default {
       this.layers = []
       this.projectId=-1
       this.$emit('changeProjectId',-1)
-      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+      this.$emit('changeLayersContent',this.layers)
+      this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allProjects.push({
@@ -229,7 +231,7 @@ export default {
         }).catch(error=> {
           console.log(error.toString())
         })
-      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+      this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allTasks.push({
@@ -250,9 +252,12 @@ export default {
           this.layers.pop()
         else break
       }
+      this.allProjects=[]
+      this.allTasks=[]
       this.projectId=evt.currentTarget.getAttribute('taskId')
       this.$emit('changeProjectId',evt.currentTarget.getAttribute('taskId'))
-      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+      this.$emit('changeLayersContent',this.layers)
+      this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allProjects.push({
@@ -265,7 +270,7 @@ export default {
         }).catch(error=> {
           console.log(error.toString())
         })
-      this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+      this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allTasks.push({
@@ -284,8 +289,15 @@ export default {
     }
   },
   created: function () {
+    for(var i=0;i<this.layersContent.length;i++)
+    {
+      this.layers.push({
+        name: this.layersContent[i].name,
+        id: this.layersContent[i].id
+      })
+    }
     if(this.projectId=='') this.projectId=-1;
-    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/projects').then(response=> {
+    this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allProjects.push({
@@ -298,7 +310,7 @@ export default {
         }).catch(error=> {
           console.log(error.toString())
         })
-    this.$http.get('http://localhost:8080/projects/'+this.projectId+'/tasks').then(response=> {
+    this.$http.get(HOST+'/projects/'+this.projectId+'/tasks').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
             this.allTasks.push({
@@ -312,7 +324,7 @@ export default {
           console.log(error.toString())
         })
   },
-  props: ['projectId']
+  props: ['projectId', 'layersContent']
 }
 </script>
 <style>
