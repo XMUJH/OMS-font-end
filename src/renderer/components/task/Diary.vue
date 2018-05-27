@@ -2,7 +2,7 @@
   
     <el-main class="maincontent">
       <el-table :data="tableData3" height="400" borderstyle="width: 100%" header-cell-style="color:#000000;background-color:#f3f3f3">
-        <el-table-column prop="name" label="序号" width=140></el-table-column>
+        <el-table-column prop="name" label="姓名" width=140></el-table-column>
         <el-table-column prop="begintime" label="签到时间" width=180></el-table-column>
         <el-table-column prop="endtime" label="签退时间" width=180></el-table-column>
         <el-table-column prop="lasttime" label="工作时长" width=150></el-table-column>
@@ -59,7 +59,7 @@
     created: function () {
       if(this.userRole=='incharge')
       {
-        this.$http.get('http://localhost:8080/tasks/'+1+'/records').then(response=> {
+        this.$http.get(HOST+'/tasks/'+1+'/records').then(response=> {
           console.log(response.data)
           var a;
           var b;
@@ -68,7 +68,7 @@
             a=Number(new Date(response.data[i].attendance.beginTime).getMonth()) + Number(1)
             b=Number(new Date(response.data[i].attendance.endTime).getMonth()) + Number(1)
             this.tableData3.push({
-              name: i+1,
+              name: response.data[i].attendance.user.name,
               begintime: new Date(response.data[i].attendance.beginTime).getFullYear()+'/'+a+'/'+new Date(response.data[i].attendance.beginTime).getDate()+'/'+new Date(response.data[i].attendance.beginTime).getHours()+'点'+new Date(response.data[i].attendance.beginTime).getMinutes()+'分',
               endtime: new Date(response.data[i].attendance.endTime).getFullYear()+'/'+b+'/'+new Date(response.data[i].attendance.endTime).getDate()+'/'+new Date(response.data[i].attendance.endTime).getHours()+'点'+new Date(response.data[i].attendance.endTime).getMinutes()+'分',
               lasttime: this.calculateTime(response.data[i].attendance.beginTime,response.data[i].attendance.endTime),
@@ -81,7 +81,7 @@
       }
       else
       {
-        this.$http.get('http://localhost:8080/tasks/'+1+'/users/'+1+'/records').then(response=> {
+        this.$http.get(HOST+'/tasks/'+1+'/users/'+1+'/records').then(response=> {
           console.log(response.data)
           var a;
           var b;
@@ -90,7 +90,7 @@
             a=Number(new Date(response.data[i].attendance.beginTime).getMonth()) + Number(1)
             b=Number(new Date(response.data[i].attendance.endTime).getMonth()) + Number(1)
             this.tableData3.push({
-              name: i+1,
+              name: response.data[i].attendance.user.name,
               begintime: new Date(response.data[i].attendance.beginTime).getFullYear()+'/'+a+'/'+new Date(response.data[i].attendance.beginTime).getDate()+'/'+new Date(response.data[i].attendance.beginTime).getHours()+'点'+new Date(response.data[i].attendance.beginTime).getMinutes()+'分',
               endtime: new Date(response.data[i].attendance.endTime).getFullYear()+'/'+b+'/'+new Date(response.data[i].attendance.endTime).getDate()+'/'+new Date(response.data[i].attendance.endTime).getHours()+'点'+new Date(response.data[i].attendance.endTime).getMinutes()+'分',
               lasttime: this.calculateTime(response.data[i].attendance.beginTime,response.data[i].attendance.endTime),

@@ -2,7 +2,7 @@
   <div class="container">
     <el-container>
         <div class="sidebar"><sidebar2></sidebar2></div>
-        <div class="main"><router-view :firstBread="firstBread" :projectId="projectId" @changeFirstBread="getFirstBread" @changeProjectId="getProjectId"></router-view></div>
+        <div class="main"><router-view :firstBread="firstBread" :projectId="projectId" :layersContent="layersContent" @changeFirstBread="getFirstBread" @changeProjectId="getProjectId" @changeLayersContent="getLayersContent"></router-view></div>
     </el-container>
   </div>
 </template>
@@ -14,7 +14,8 @@ export default {
     return {
       input: '',
       firstBread: '',
-      projectId: ''
+      projectId: '',
+      layersContent: ''
     }
   },
   methods: {
@@ -23,6 +24,9 @@ export default {
     },
     getProjectId (msg) {
       this.projectId = msg
+    },
+    getLayersContent (msg) {
+      this.layersContent = msg
     }
   }
 }
