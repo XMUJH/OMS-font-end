@@ -81,7 +81,7 @@
     downloadResource () {
         let iframe = document.createElement('iframe')
         iframe.style.display = 'none'
-        iframe.src = 'http://localhost:8080/download/'
+        iframe.src = 'http://localhost:8080/download/taskFiles/第九届大赛决赛报到须知.pdf'
         iframe.onload = function () {
           document.body.removeChild(iframe)
         }

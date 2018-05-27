@@ -85,6 +85,7 @@ export default {
   },
   methods: {
     detail (event) {
+      localStorage.setItem('taskId',event.currentTarget.getAttribute('taskId'))
       this.$router.replace('/contractee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
     },
@@ -296,7 +297,11 @@ export default {
         id: this.layersContent[i].id
       })
     }
-    if(this.projectId=='') this.projectId=-1;
+    if(this.projectId=='') 
+    {
+      this.projectId=-1;
+      this.$emit('changeProjectId',-1)
+    }
     this.$http.get(HOST+'/projects/'+this.projectId+'/projects').then(response=> {
           for(var i=0;i<response.data.length;i++)
           {
