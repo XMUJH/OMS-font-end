@@ -117,6 +117,9 @@ export default {
         });
     },
     handleClick (event) {
+    	var a = event.currentTarget.getAttribute('id')
+      localStorage.setItem('milestoneId',event.currentTarget.getAttribute('id'))
+      console.log(a)
       this.$router.push({path: '/outsourcee/homePage/task/detail/milestone'})
       this.$emit('changeThirdBread', event.currentTarget.getAttribute('titleName'))
     } 

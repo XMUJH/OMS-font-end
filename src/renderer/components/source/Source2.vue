@@ -121,7 +121,44 @@ export default {
       }]
     }
   },
+  mounted(){
+    this.init()
+  },
   methods: {
+    init(){
+      this.$http.get(HOST+'/resources')
+      .then(response=>{
+        console.log(response.data)
+        response.data.forEach(e=>{
+          console.log(e)
+          var count=0;
+          var safetyLevel;
+          switch(e.safetyLevel){
+            case 'A':safetyLevel=5;break;
+            case 'B':safetyLevel=4;break;
+            case 'C':safetyLevel=3;break;
+            case 'D':safetyLevel=2;break;
+            case 'E':safetyLevel=1;break;
+          }
+          for(x in e.belong)
+            count++;
+          var missions;
+          for(var y=0;y<e.belong.length;y++){
+            missions.push(e.belong[y])
+          }
+          var resource={
+            name:e.resourceName,
+            point:safetyLevel,
+            num:count,
+            mission:missions
+          }
+          vm.tableData.push(resource);
+        });
+      })
+      .catch(error=>{
+
+      })
+    },
     handleClick (event) {
     },
     addSource () {
