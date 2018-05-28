@@ -15,12 +15,8 @@
 
         <el-table-column label="所属任务">
           <template slot-scope="scope">
-            <div v-if="scope.row.num=== 1">
-              <span>{{ scope.row.mission }}</span>
-            </div>
-            <div v-if="scope.row.num=== 2">
-              <span>{{ scope.row.mission[0] }}</span>
-              <span>{{ scope.row.mission[1] }}</span>
+            <div v-for="m in scope.row.mission">
+              <span>{{m}}</span>
             </div>
           </template>
         </el-table-column>
@@ -112,11 +108,11 @@ export default {
             case 'D':safetyLevel=2;break;
             case 'E':safetyLevel=1;break;
           }
-          for(x in e.belong)
+          for(var x=0;x<e.belong.length;x++)
             count++;
-          var mission=[];
+          var missions=[];
           for(var y=0;y<e.belong.length;y++){
-            missions.push(e.belong[y])
+            missions.push(e.belong[y].name)
           }
           var resource={
             name:e.resourceName,

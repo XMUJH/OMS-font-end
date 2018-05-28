@@ -1,7 +1,7 @@
 <template>
     <el-main class="maincontent">
        <div style="position:relative;width:100%;height:40px;margin:0 0 10px 10px;">
-        <el-input style="width:50%"placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
+        <el-input style="width:50%" placeholder="搜索成员"  size="mini" prefix-icon="el-icon-search" v-model="input"></el-input>
         <el-button style="float: right;margin-right: 10px;" v-if="userRole=='incharge'" type="primary" round @click="addClick">添加成员</el-button>
       </div>
       

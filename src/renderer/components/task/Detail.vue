@@ -1,64 +1,80 @@
 <template>
-		<el-container>
-			<breadcrumb :currentFirstBread="firstBread" :currentSecondBread="secondBread" :currentThirdBread="thirdBread" @changeThirdBread="getThirdBread" @changeDialogShow="getDialogShow"></breadcrumb>
-      <el-header class="header"><tabs @changeSecondBread="getSecondBread" @changeThirdBread="getThirdBread"></tabs></el-header>
-      <router-view @changeThirdBread="getThirdBread" @addNewMember="getNewMember" :userRole="userRole" :newMember="newMember"></router-view>
-		  <el-dialog title="请填写工作日志" :visible.sync="dialogShow">
-                <el-input v-model="input" auto-complete="off" type="textarea"></el-input>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogShow = false">取 消</el-button>
-                    <el-button type="primary" @click="finishJob2">提 交</el-button>
-                </div>
-      </el-dialog>  
-		</el-container>
+  <el-container>
+   <breadcrumb :currentFirstBread="firstBread" :currentSecondBread="secondBread" :currentThirdBread="thirdBread" @changeThirdBread="getThirdBread" @changeDialogShow="getDialogShow"></breadcrumb>
+   <el-header class="header"><tabs @changeSecondBread="getSecondBread" @changeThirdBread="getThirdBread"></tabs></el-header>
+   <router-view @changeThirdBread="getThirdBread" @addNewMember="getNewMember" :userRole="userRole" :newMember="newMember"></router-view>
+   <el-dialog title="请填写工作日志" :visible.sync="dialogShow">
+    <el-input v-model="input" auto-complete="off" type="textarea"></el-input>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="dialogShow = false">取 消</el-button>
+      <el-button type="primary" @click="finishJob2">提 交</el-button>
+    </div>
+  </el-dialog>  
+</el-container>
 </template>
 
 <script>
-export default {
-  name: 'detail-page',
-  data () {
-    return {
-      input: '',
-      secondBread: '任务进度',
-      thirdBread: '',
-      newMember: '',
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+  export default {
+    name: 'detail-page',
+    data () {
+      return {
+        input: '',
+        secondBread: '任务进度',
+        thirdBread: '',
+        newMember: '',
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '120px',
+        dialogShow: false
+      }
+    },
+    methods: {
+      getSecondBread (msg) {
+        this.secondBread = msg
       },
-      formLabelWidth: '120px',
-      dialogShow: false
-    }
-  },
-  methods: {
-    getSecondBread (msg) {
-      this.secondBread = msg
+      getThirdBread (msg) {
+        this.thirdBread = msg
+      },
+      getNewMember (msg) {
+        this.newMember = msg
+      },
+      getDialogShow (msg) {
+        this.dialogShow = msg
+      },
+      finishJob2 () {
+        this.dialogShow = false
+        var userId=localStorage.getItem('userId')
+        var taskId=localStorage.getItem('taskId')
+        var myDate = new Date();
+        var text=this.input
+        this.$http.patch(HOST+'/attendances',JSON.stringify({
+          userId:userId,
+          taskId:taskId,
+          content:text
+        }),
+        {headers: {'Content-Type': 'application/json;charset=utf-8'}})
+        .then(response=>{
+          this.$message({
+            message: '签退成功',
+            type: 'success'
+          })
+        })
+        .catch(error=>{
+
+        })
+
+      }
     },
-    getThirdBread (msg) {
-      this.thirdBread = msg
-    },
-    getNewMember (msg) {
-      this.newMember = msg
-    },
-    getDialogShow (msg) {
-      this.dialogShow = msg
-    },
-    finishJob2 () {
-      this.dialogShow = false
-      this.$message({
-        message: '签退成功',
-        type: 'success'
-      })
-    }
-  },
-  props: ['firstBread', 'userRole']
-}
+    props: ['firstBread', 'userRole']
+  }
 </script>
 
 <style>
