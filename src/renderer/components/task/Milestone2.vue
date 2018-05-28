@@ -92,7 +92,7 @@
         </el-table-column>
         <el-table-column label="审核"  width="120">
           <template slot-scope="scope" v-if="scope.row.status=='已提交'&&scope.row.rank==1">
-            <el-button type="success" icon="el-icon-check" circle  />
+            <el-button type="success" icon="el-icon-check" circle  @click="shenHe0"/>
             <el-button type="danger" icon="el-icon-error" circle   @click="dialogShow=true"/>
           </template>
         </el-table-column>
@@ -117,6 +117,7 @@
     data () {
       return {
         info:'',
+        input:'',
         endtime:'',
         fileList: [],
         tableData: [],
@@ -150,6 +151,8 @@
     },
     methods: {
       init(){
+        var myDate = new Date()
+        console.log(myDate.toLocaleString())
         this.$http.get(
           HOST + '/milestones/' + localStorage["milestoneId"],
           {headers: {'Content-Type': 'application/json;charset=utf-8'}}
@@ -186,9 +189,49 @@
             console.log(error);
           });
       },
-      shenHe () {
+      shenHe0 () {
+        var myDate = new Date()
         this.dialogShow = false
-        this.condition = 1
+        this.$http.patch(          
+          HOST + '/milestones/'+localStorage['milestoneId'], 
+          JSON.stringify({
+            "status":"PASS",
+            "reason":this.input,
+            "date": myDate
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            //vm.inChargeTasks=response.data
+            this.init()
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+        });
+      },
+      shenHe () {
+        var myDate = new Date()
+        this.dialogShow = false
+        this.$http.patch(          
+          HOST + '/milestones/'+localStorage['milestoneId'], 
+          JSON.stringify({
+            "status":"NOTPASS",
+            "reason":this.input,
+            "date": myDate
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            //vm.inChargeTasks=response.data
+            this.init()
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+        });
       }
     }
   }
