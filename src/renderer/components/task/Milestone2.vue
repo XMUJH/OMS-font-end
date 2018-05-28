@@ -124,29 +124,7 @@
         condition: 0,
         dialogShow: false,
         fileList: [],
-        tableData: [{
-          date: '2016-05-03',
-          name: '需求规格说明1.0',
-          type: 'doc',
-          size: '19.3k'
-        }, {
-          date: '2016-05-02',
-          name: '需求规格说明1.0',
-          type: 'doc',
-          size: '19.3k'
-        }, {
-          date: '2016-05-02',
-          name: '需求规格说明1.0',
-          type: 'doc',
-          size: '19.3k'
-        }, {
-          date: '2016-05-01',
-          name: '需求规格说明1.0',
-          type: 'doc',
-          size: '19.3k'
-        }],
-        tableData2:[{time:'2015-01-01',status:'已提交',reason:'',rank:1},{time:'2015-01-01',status:'未通过',reason:'aaa',rank:2},
-        {time:'2015-01-01',status:'已提交',reason:'',rank:3}]
+        tableData2:[]
       }
     },
     methods: {

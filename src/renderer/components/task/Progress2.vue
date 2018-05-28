@@ -29,7 +29,7 @@
 
 				<div style="height:25%;margin:20px 0 60px;">
 					<el-steps :active="completion" align-center>
-						<el-step v-for="item in task" style="cursor:pointer" :id=item.id :title=item.title :description=item.des :icon=item.ic @click.native='handleClick($event)'></el-step>
+						<el-step v-for="item in task" style="cursor:pointer" :id=item.id :title=item.title :description=item.des :icon=item.ic :titleName=item.title @click.native='handleClick($event)'></el-step>
 						<!--
 						<el-step style="cursor:pointer" titleName='详细设计' title="详细设计" description="2018/4/19" icon="el-icon-success" @click.native='handleClick($event)'></el-step>
 						<el-step style="cursor:pointer" titleName='界面设计' title="界面设计" description="2018/4/20" icon="el-icon-warning" @click.native='handleClick($event)'></el-step>
