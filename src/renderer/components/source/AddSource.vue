@@ -33,7 +33,14 @@
     <el-row class="myEl-Row">
       <font class="el-rowText">分配资源</font>
     </el-row>
-    <el-tree :data="data2" show-checkbox node-key="id" :default-expanded-keys="[]" :default-checked-keys="[]" :props="defaultProps">
+    <el-tree 
+    :data="data2" 
+    show-checkbox 
+    node-key="id"
+    ref="tree"
+    :default-expanded-keys="[]" 
+    :default-checked-keys="[]" 
+    :props="defaultProps">
     </el-tree>
     <div style="width:90%;height:80px;display:flex;justify-content:center; align-items:center;">
       <el-button type="primary" round @click="submitUpload">确定</el-button>
@@ -52,38 +59,10 @@
     name: 'source-page',
     data () {
       return {
-        value1: null,
-        data2: [{
-          id: 1,
-          label: '虹软系统项目',
-          children: [{
-            id: 4,
-            label: '智能外包管理平台'
-          }, {
-            id: 9,
-            label: 'ppp项目'
-          }]
-        }, {
-          id: 2,
-          label: '智慧城市建设项目',
-          children: [{
-            id: 5,
-            label: '智慧城市任务一'
-          }, {
-            id: 6,
-            label: '智慧城市任务二'
-          }]
-        }, {
-          id: 3,
-          label: '智能语音系统',
-          children: [{
-            id: 7,
-            label: '智能语音任务一'
-          }, {
-            id: 8,
-            label: '智能语音任务二'
-          }]
-        }],
+        fileList:[],
+        value1:0,
+        layers: [],
+        data2: [],
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -102,19 +81,43 @@
         return this.$confirm(`确定移除 ${file.name}？`)
       },
       beforeUpload: function (file) {
+        var vm=this;
         console.log(file)
         // 这里是重点，将文件转化为formdata数据上传
         let fd = new FormData()
         fd.append('file', file)
-        this.$http.post(HOST+'/upload', fd).then(function (response) {
+        this.$http.post(HOST+'/upload/resources', fd).then(function (response) {
           console.log(response)
+          console.log(response.data)
+          vm.resourceId=parseInt(response.data);
         }).catch(function (error) {
           console.log(error.toString())
         })
       },
       submitUpload(){
+        var vm=this;
+        console.log('hahahha'+vm.resourceId)
         this.$refs.upload.submit();
+        this.$http.post(HOST+'/resources/'+vm.resourceId+'/allot', JSON.stringify(vm.$refs.tree.getCheckedNodes()),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then(function (response) {
+          console.log(response)
+          resourceId=response.data;
+        }).catch(function (error) {
+          console.log(error.toString())
+        })
       }
+    },
+    created: function () {
+      console.log(12)
+      this.$http.get(HOST+'/projects').then(response=> {
+        for(var i=0;i<response.data.length;i++)
+        {
+          this.data2.push(response.data[i])
+        }
+      }).catch(error=> {
+        console.log(error.toString())
+      })
+
     }
   }
 </script>
