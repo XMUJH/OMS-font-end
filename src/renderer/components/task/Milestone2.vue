@@ -47,8 +47,7 @@
             label="操作"
             width="100">
             <template slot-scope="scope">
-              <el-button type="text" size="small">查看</el-button>
-              <el-button type="text" size="small">下载</el-button>
+              <el-button type="text" size="small" @click="downloadResource(scope.$index)">下载</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -141,6 +140,20 @@
           }).catch(error=>{
             console.log(error);
           });
+        this.$http.get(HOST+'/milestones/'+localStorage['milestoneId']+'/results').then(response=>{
+          console.log(response.data)
+          var a
+          for(var i=0;i<response.data.length;i++)
+          {
+            a=Number(new Date(response.data[i].commit).getMonth()) + Number(1)
+            this.tableData.push({
+              date: new Date(response.data[i].commit).getFullYear()+'/'+a+'/'+new Date(response.data[i].commit).getDate(),
+              name: response.data[i].name,
+              type: 'rar'
+            })
+          }
+        }).catch(error=>{
+        })
         this.$http.get(
           HOST + '/milestones/' + localStorage["milestoneId"] + '/milestoneHistories',
           {headers: {'Content-Type': 'application/json;charset=utf-8'}}
@@ -210,6 +223,15 @@
             //console.log(456)
             console.log(error);
         });
+      },
+      downloadResource (index) {
+        let iframe = document.createElement('iframe')
+        iframe.style.display = 'none'
+        iframe.src = HOST+'/download/results/'+this.tableData[index].name+'.'+this.tableData[index].type
+        iframe.onload = function () {
+          document.body.removeChild(iframe)
+        }
+        document.body.appendChild(iframe)
       }
     }
   }

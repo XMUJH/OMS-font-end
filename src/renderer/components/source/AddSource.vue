@@ -9,7 +9,7 @@
       <el-upload 
       class="upload-demo"
       ref="upload"
-      action="http://localhost:8080/upload/"
+      :action=url
       :on-preview="handlePreview"
       :before-upload="beforeUpload"
       :on-remove="handleRemove"
@@ -66,7 +66,8 @@
         defaultProps: {
           children: 'children',
           label: 'label'
-        }
+        },
+        url: HOST+"/upload/resources"
       }
     },
     methods: {

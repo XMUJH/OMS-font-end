@@ -1,7 +1,7 @@
 <template>
     <div>
     	<el-container>
-        <searchbar :showContent='"请输入要查询的任务名称"'></searchbar>
+        <searchbar2 :showContent='"请输入要查询的任务名称"'></searchbar2>
           <el-main class="maincontent" style="margin-top: 105px;">
                 <el-breadcrumb separator-class="el-icon-arrow-right" style="height:30px">
                     <el-breadcrumb-item :to="{ path: '/contractee/homePage/task' }" @click.native="brush">所有项目</el-breadcrumb-item>

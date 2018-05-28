@@ -13,6 +13,7 @@ import tabs from './components/common/Tabs.vue'
 import tabs2 from './components/common/Tabs2.vue'
 import Mytitle from './components/common/Title.vue'
 import Searchbar from './components/common/Searchbar.vue'
+import Searchbar2 from './components/common/Searchbar2.vue'
 import './style/style.css'
 import contextmenu from 'v-contextmenu'
 import 'v-contextmenu/dist/index.css'
@@ -28,6 +29,7 @@ if (!process.env.IS_WEB) {
   Vue.component('tabs2', tabs2)
   Vue.component('Mytitle', Mytitle)
   Vue.component('searchbar', Searchbar)
+  Vue.component('searchbar2', Searchbar2)
   Vue.component('sidebar2', sidebar2)
   Vue.use(contextmenu)
   Vue.use(draggable)

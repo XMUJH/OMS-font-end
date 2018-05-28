@@ -11,7 +11,6 @@
   </g>
 </g></g> </svg>
 </router-link>
-<img  class="searchbar-avatar" :src="pic">
   </el-header>
 </template>
 
@@ -20,17 +19,9 @@
     data () {
       return {
         input: '',
-        pic: ''
       }
     },
-    props: ['showContent'],
-    created:function() {
-      this.$http.get(HOST+'/user/'+localStorage['userId']).then(response=> {
-        this.pic=HOST+'/'+response.data.photoUrl
-      }).catch(error=> {
-        console.log(error.toString())
-      })
-    }
+    props: ['showContent']
   }
 </script>
 

@@ -19,7 +19,7 @@
       <div style="height:150px; overflow:auto">
         <el-upload
           class="upload-demo"
-          action="http://localhost:8080/upload/"
+          :action=url
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-upload="beforeUpload"
@@ -70,7 +70,8 @@
         info:'',
         endtime:'',
         fileList: [],
-        tableData: []
+        tableData: [],
+        url: HOST+'/upload/results'
       }
     },
     methods: {
@@ -89,9 +90,23 @@
         // 这里是重点，将文件转化为formdata数据上传
         let fd = new FormData()
         fd.append('file', file)
-        this.$http.post('http://localhost:8080/upload/', fd).then(function (response) {
+        console.log(file)
+        this.$http.post(HOST+'/upload/results', fd).then(response=> {
+          var tag={
+            name: file.name.split('.')[0],
+            address: 'result/'+file.name,
+            commit: new Date()
+          }
+          this.$http.post(HOST+'/milestones/'+localStorage['milestoneId']+'/results', tag).then(response=> {
+            this.$message({
+                message: '上传成功',
+                type: 'success'
+              });
+          }).catch(error=> {
+            console.log(error.toString())
+          })
           console.log(response)
-        }).catch(function (error) {
+        }).catch(error=> {
           console.log(error.toString())
         })
       },

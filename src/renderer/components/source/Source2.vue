@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<searchbar :showContent='"请输入要查询的资源名称"'></searchbar>
+			<searchbar2 :showContent='"请输入要查询的资源名称"'></searchbar2>
 			<el-main class="maincontent" style="margin-top: 105px;">
 				<el-button type="primary" style="margin:0 0 10px 0;" round size="mini" @click="addSource">添加资源</el-button>
 

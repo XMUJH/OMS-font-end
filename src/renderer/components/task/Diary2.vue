@@ -57,7 +57,7 @@
       }  
     },
     created: function () {
-        this.$http.get(HOST+'/tasks/'+1+'/records').then(response=> {
+        this.$http.get(HOST+'/tasks/'+localStorage['taskId']+'/records').then(response=> {
           console.log(response.data)
           var a;
           var b;

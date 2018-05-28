@@ -38,7 +38,7 @@
             width="100">
             <template slot-scope="scope">
               <el-button v-if="scope.row.type=='pdf'||scope.row.type=='txt'||scope.row.type=='jpg'||scope.row.type=='png'" type="text" size="small" @click="checkResource(scope.$index)">查看</el-button>
-              <el-button type="text" size="small" @click="downloadResource()">下载</el-button>
+              <el-button type="text" size="small" @click="downloadResource(scope.$index)">下载</el-button>
             </template>
           </el-table-column>
       </el-table>
@@ -78,10 +78,10 @@
       }).catch(error=>{
       });
     },
-    downloadResource () {
+    downloadResource (index) {
         let iframe = document.createElement('iframe')
         iframe.style.display = 'none'
-        iframe.src = 'http://localhost:8080/download/taskFiles/第九届大赛决赛报到须知.pdf'
+        iframe.src = HOST+'/download/resources/'+this.tableData[index].name+'.'+this.tableData[index].type
         iframe.onload = function () {
           document.body.removeChild(iframe)
         }

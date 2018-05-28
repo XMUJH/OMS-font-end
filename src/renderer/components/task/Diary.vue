@@ -59,7 +59,7 @@
     created: function () {
       if(this.userRole=='incharge')
       {
-        this.$http.get(HOST+'/tasks/'+1+'/records').then(response=> {
+        this.$http.get(HOST+'/tasks/'+localStorage['taskId']+'/records').then(response=> {
           console.log(response.data)
           var a;
           var b;
@@ -81,7 +81,7 @@
       }
       else
       {
-        this.$http.get(HOST+'/tasks/'+1+'/users/'+1+'/records').then(response=> {
+        this.$http.get(HOST+'/tasks/'+localStorage['taskId']+'/users/'+localStorage['userId']+'/records').then(response=> {
           console.log(response.data)
           var a;
           var b;
