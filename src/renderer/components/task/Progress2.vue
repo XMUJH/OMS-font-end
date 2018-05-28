@@ -109,7 +109,6 @@ export default {
             		title:response.data[i].name,
             		des:response.data[i].endTime.slice(0,10),
             		ic:ico
-            		
             	})
             }
            //vm.taskGoal = response.data.info
