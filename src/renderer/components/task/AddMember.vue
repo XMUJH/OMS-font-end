@@ -23,9 +23,23 @@
     },
     methods: {
       handleClick (event) {
-        this.$router.push({path: '/outsourcee/homePage/task/detail/member'})
-        this.$emit('changeThirdBread', '')
-        this.$emit('addNewMember', {name: this.input0, job: this.input1})
+        this.$http.post(          
+          HOST + '/tasks/'+localStorage['taskId']+'/users/'+this.input0, 
+          JSON.stringify({
+            "job":this.input1
+          }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}
+          ).then(response=>{
+            //console.log(123)
+            console.log(response.data)
+            //that.$router.replace('/facerecognition')
+            this.$router.replace('/outsourcee/homePage/task/detail/member')
+            this.$emit('changeThirdBread', '')
+          }).catch(error=>{
+            //console.log(456)
+            console.log(error);
+        });
+        //this.$emit('addNewMember', {name: this.input0, job: this.input1})
       }
     }
   }

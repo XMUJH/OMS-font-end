@@ -73,6 +73,7 @@ export default new Router({
             },
             {
               path: 'memberdetail',
+              name: 'memberdetail',
               component: require('@/components/task/memberdetail').default
             },
             {
@@ -143,6 +144,7 @@ export default new Router({
             },
             {
               path: 'memberdetail',
+              name: 'memberdetail2',
               component: require('@/components/task/memberdetail2').default
             },
             {

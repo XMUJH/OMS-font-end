@@ -8,7 +8,7 @@
                         <v-contextmenu-item @click="edit">编辑里程碑</v-contextmenu-item>
                 </v-contextmenu>
                 <div class="el-scrollbar">
-                    <div class="task" v-for="item in inChargeTasks" :taskName=item.name :taskId=item.id @click="detail1($event)" v-contextmenu:contextmenuTaskMini>
+                    <div class="task" v-for="item in inChargeTasks" :taskName=item.name :taskId=item.id @mouseup="getAttention($event)" @click="detail1($event)" v-contextmenu:contextmenuTaskMini>
                         <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.taskColor width=80></el-progress>
                         <p class="taskText">{{item.name}}</p>
                     </div>
@@ -44,7 +44,7 @@ export default {
     init() {
         var vm=this;
         this.$http.post(          
-          HOST + '/users/2/tasks', 
+          HOST + '/users/'+localStorage['userId']+'/tasks', 
           JSON.stringify({
             "choice":"LEADER"
           }),
@@ -52,13 +52,14 @@ export default {
           ).then(response=>{
             //console.log(123)
             vm.inChargeTasks=response.data
+            console.log(response.data)
             //that.$router.replace('/facerecognition')
           }).catch(error=>{
             //console.log(456)
             console.log(error);
         });
         this.$http.post(          
-          HOST + '/users/2/tasks', 
+          HOST + '/users/'+localStorage['userId']+'/tasks', 
           JSON.stringify({
             "choice":"FOLLOWER"
           }),
@@ -76,11 +77,16 @@ export default {
         confirmButtonText: '确定',
         cancelButtonText: '取消'
       }).then(({ value }) => {
-        this.$message({
+        this.$http.patch(HOST+'/users/'+localStorage['userId']+'/codes/'+value).then(response=> {
+          console.log(response)
+          this.$message({
           type: 'success',
           message: '任务添加成功'
+          })
+          this.init()
+        }).catch(error=> {
+          console.log(error.toString())
         })
-        this.$router.replace('/outsourcee/homePage/task/edittask/')
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -105,8 +111,11 @@ export default {
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
       this.$emit('changeUserRole', 'participate')
     },
-    edit (vm, event) {
+    edit () {
       this.$router.replace('/outsourcee/homePage/task/edittask/')
+    },
+    getAttention(event){
+      localStorage.setItem('taskId',event.currentTarget.getAttribute('taskId'))
     }
   },
   created: function () {
