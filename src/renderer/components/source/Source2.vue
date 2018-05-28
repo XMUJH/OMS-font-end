@@ -90,35 +90,7 @@ export default {
     return {
       activeName: 'fifth',
       input: '',
-      tableData: [{
-        name: '虹软人脸识别API使用手册',
-        point: 5,
-        num: 2,
-        mission: [
-          '智能外包管理平台',
-          '智能家居平台'
-        ]
-      }, {
-        name: '人脸捕捉API',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '需求规格说明模板',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '详细设计说明书模板',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '代码规范',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }]
+      tableData: []
     }
   },
   mounted(){
@@ -142,7 +114,7 @@ export default {
           }
           for(x in e.belong)
             count++;
-          var missions;
+          var mission=[];
           for(var y=0;y<e.belong.length;y++){
             missions.push(e.belong[y])
           }
@@ -152,7 +124,7 @@ export default {
             num:count,
             mission:missions
           }
-          vm.tableData.push(resource);
+          this.tableData.push(resource);
         });
       })
       .catch(error=>{

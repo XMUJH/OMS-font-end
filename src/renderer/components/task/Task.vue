@@ -42,10 +42,9 @@ export default {
   },
   methods: {
     init() {
-        localStorage.setItem('userId',2)
         var vm=this;
         this.$http.post(          
-          HOST + '/users/2/tasks', 
+          HOST + '/users/'+localStorage['userId']+'/tasks', 
           JSON.stringify({
             "choice":"LEADER"
           }),
@@ -60,7 +59,7 @@ export default {
             console.log(error);
         });
         this.$http.post(          
-          HOST + '/users/2/tasks', 
+          HOST + '/users/'+localStorage['userId']+'/tasks', 
           JSON.stringify({
             "choice":"FOLLOWER"
           }),
@@ -84,8 +83,7 @@ export default {
           type: 'success',
           message: '任务添加成功'
           })
-          localStorage.setItem('taskId',response.data.task.id)
-          this.$router.replace('/outsourcee/homePage/task/edittask/')
+          this.init()
         }).catch(error=> {
           console.log(error.toString())
         })
@@ -100,7 +98,6 @@ export default {
       //this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       var taskId = event.currentTarget.getAttribute('taskId')
       localStorage.setItem('taskId',taskId)
-      localStorage.setItem('userId',2)
       //this.$router.replace({ name:'test',params:{taskId}})
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))
@@ -109,7 +106,6 @@ export default {
     detail2 (event) {
       var taskId = event.currentTarget.getAttribute('taskId')
       localStorage.setItem('taskId',taskId)
-      localStorage.setItem('userId',2)
       //console.log(taskId)
       this.$router.replace('/outsourcee/homePage/task/detail/progress/')
       this.$emit('changeFirstBread', event.currentTarget.getAttribute('taskName'))

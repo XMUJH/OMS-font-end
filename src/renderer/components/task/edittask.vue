@@ -53,7 +53,7 @@
                   <div style="height:5px"/>
                   <el-input placeholder="输入里程碑目标" v-model="input1" size="small" clearable type="textarea"></el-input>
                   <div style="height:5px"/>
-                  <div class="block">
+                  <div>
                     <el-date-picker v-model="value1" type="date" placeholder="选择日期" size="small"></el-date-picker>
                   </div>
                 <div slot="footer" class="dialog-footer">

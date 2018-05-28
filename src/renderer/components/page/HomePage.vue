@@ -28,6 +28,10 @@ export default {
     getUserId (msg) {
       this.userId = msg
     }
+  },
+  mounted: function() {
+    if(this.$route.params.userId) localStorage.setItem('userId',this.$route.params.userId)
+    console.log(this.$route.params.userId)
   }
 }
 </script>
