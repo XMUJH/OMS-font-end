@@ -197,6 +197,7 @@
                 company: response.data[i].company.name
               })
             }
+            this.layers.push(this.tableData2[0].company)
           }).catch(error=>{
             console.log(error);
           });
