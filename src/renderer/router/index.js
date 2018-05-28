@@ -22,7 +22,7 @@ export default new Router({
     },
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/contractee/homePage/task'
     },
     {
       path: '/outsourcee/homePage',
