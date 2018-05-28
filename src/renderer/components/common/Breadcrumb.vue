@@ -38,12 +38,27 @@
       },
       callInRoll () {
         const h = this.$createElement
-        this.$notify({
+        var userId=localStorage.getItem('userId')
+        var taskId=localStorage.getItem('taskId')
+        var myDate = new Date();
+        this.$http.post(HOST+'/attendances',JSON.stringify({
+          userId:userId,
+          taskId:taskId
+        }),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}})
+        .then(response=>{
+          this.$notify({
           title: '签到成功',
           message: h('i', {style: 'color: rgb(198, 47, 47)'}, '祝您工作愉快'),
           type: 'success',
           offset: 100
         })
+        })
+        .catch(error=>{
+
+        })
+        
+
       },
       finishJob () {
         this.$emit('changeDialogShow', true)

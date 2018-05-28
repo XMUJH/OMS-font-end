@@ -15,12 +15,8 @@
 
         <el-table-column label="所属任务">
           <template slot-scope="scope">
-            <div v-if="scope.row.num=== 1">
-              <span>{{ scope.row.mission }}</span>
-            </div>
-            <div v-if="scope.row.num=== 2">
-              <span>{{ scope.row.mission[0] }}</span>
-              <span>{{ scope.row.mission[1] }}</span>
+            <div v-for="m in scope.row.mission">
+              <span>{{m}}</span>
             </div>
           </template>
         </el-table-column>
@@ -90,35 +86,7 @@ export default {
     return {
       activeName: 'fifth',
       input: '',
-      tableData: [{
-        name: '虹软人脸识别API使用手册',
-        point: 5,
-        num: 2,
-        mission: [
-          '智能外包管理平台',
-          '智能家居平台'
-        ]
-      }, {
-        name: '人脸捕捉API',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '需求规格说明模板',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '详细设计说明书模板',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }, {
-        name: '代码规范',
-        point: 4,
-        num: 1,
-        mission: '智能外包管理平台'
-      }]
+      tableData: []
     }
   },
   mounted(){
@@ -140,11 +108,11 @@ export default {
             case 'D':safetyLevel=2;break;
             case 'E':safetyLevel=1;break;
           }
-          for(x in e.belong)
+          for(var x=0;x<e.belong.length;x++)
             count++;
-          var missions;
+          var missions=[];
           for(var y=0;y<e.belong.length;y++){
-            missions.push(e.belong[y])
+            missions.push(e.belong[y].name)
           }
           var resource={
             name:e.resourceName,
@@ -152,7 +120,7 @@ export default {
             num:count,
             mission:missions
           }
-          vm.tableData.push(resource);
+          this.tableData.push(resource);
         });
       })
       .catch(error=>{
