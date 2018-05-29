@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<searchbar :showContent='"请输入要查询的资源名称"'></searchbar>
+			<searchbar2 :showContent='"请输入要查询的资源名称"'></searchbar2>
 			<el-main class="maincontent" style="margin-top: 105px;">
        <el-row class="myEl-Row">
         <font class="el-rowText">上传资源</font>
@@ -9,7 +9,6 @@
       <el-upload 
       class="upload-demo"
       ref="upload"
-      :action=url
       :on-preview="handlePreview"
       :before-upload="beforeUpload"
       :on-remove="handleRemove"
@@ -66,8 +65,7 @@
         defaultProps: {
           children: 'children',
           label: 'label'
-        },
-        url: HOST+"/upload/resources"
+        }
       }
     },
     methods: {
@@ -91,6 +89,21 @@
           console.log(response)
           console.log(response.data)
           vm.resourceId=parseInt(response.data);
+          vm.$http.post(HOST+'/resources/'+vm.resourceId+'/safety',vm.value1).then(response=> {
+          }).catch(error=> {
+            console.log(error.toString())
+          })
+          vm.$http.post(HOST+'/resources/'+vm.resourceId+'/allot', JSON.stringify(vm.$refs.tree.getCheckedNodes()),
+          {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then(function (response) {
+          console.log(response)
+          vm.$message({
+                message: '上传成功',
+                type: 'success'
+              });
+          vm.$router.replace('/contractee/homePage/source')
+          }).catch(function (error) {
+            console.log(error.toString())
+          })
         }).catch(function (error) {
           console.log(error.toString())
         })
@@ -99,13 +112,6 @@
         var vm=this;
         console.log('hahahha'+vm.resourceId)
         this.$refs.upload.submit();
-        this.$http.post(HOST+'/resources/'+vm.resourceId+'/allot', JSON.stringify(vm.$refs.tree.getCheckedNodes()),
-          {headers: {'Content-Type': 'application/json;charset=utf-8'}}).then(function (response) {
-          console.log(response)
-          resourceId=response.data;
-        }).catch(function (error) {
-          console.log(error.toString())
-        })
       }
     },
     created: function () {

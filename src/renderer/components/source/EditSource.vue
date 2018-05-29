@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<el-container>
-			<searchbar :showContent='"请输入要查询的资源名称"'></searchbar>
+			<searchbar2 :showContent='"请输入要查询的资源名称"'></searchbar2>
 			<el-main class="maincontent" style="margin-top: 105px;">
 			  <el-row class="myEl-Row">
           <font class="el-rowText">资源名称</font>
