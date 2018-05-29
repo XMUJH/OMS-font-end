@@ -5,7 +5,7 @@
                 <el-row class="myEl-Row"><font class="el-rowText">我负责的任务</font></el-row>
                 <v-contextmenu ref="contextmenuTaskMini" theme="bright">
                         <v-contextmenu-item>进入任务</v-contextmenu-item>
-                        <v-contextmenu-item @click="edit">编辑里程碑</v-contextmenu-item>
+                        <v-contextmenu-item @click="edit">编辑任务</v-contextmenu-item>
                 </v-contextmenu>
                 <div class="el-scrollbar">
                     <div class="task" v-for="item in inChargeTasks" :taskName=item.name :taskId=item.id @mouseup="getAttention($event)" @click="detail1($event)" v-contextmenu:contextmenuTaskMini>

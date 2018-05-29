@@ -102,6 +102,7 @@
                 message: '上传成功',
                 type: 'success'
               });
+              this.init()
           }).catch(error=> {
             console.log(error.toString())
           })
@@ -121,6 +122,7 @@
           }).catch(error=>{
             console.log(error);
           });
+          this.tableData=[]
         this.$http.get(
           HOST + '/milestones/' + localStorage["milestoneId"] + '/milestoneHistories',
           {headers: {'Content-Type': 'application/json;charset=utf-8'}}

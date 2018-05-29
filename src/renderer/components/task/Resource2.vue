@@ -63,15 +63,15 @@
   methods:{
     init(){
       var vm=this
-      var taskId=1
+      var taskId=localStorage['taskId']
       this.$http.get(HOST+'/tasks/'+taskId+'/resources').then(response=>{
         console.log(response.data)
         response.data.forEach(e=>{
           console.log(e)
           var resource={
             date:e.commit.substr(0,10),
-            name:e.name,
-            type:e.type,
+            name:e.name.split('.')[0],
+            type:e.name.split('.')[1],
             size:e.size,
             level:e.safety
           }

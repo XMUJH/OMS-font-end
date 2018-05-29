@@ -140,6 +140,7 @@
           }).catch(error=>{
             console.log(error);
           });
+          this.tableData=[]
         this.$http.get(HOST+'/milestones/'+localStorage['milestoneId']+'/results').then(response=>{
           console.log(response.data)
           var a

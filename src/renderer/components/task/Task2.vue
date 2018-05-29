@@ -59,15 +59,15 @@
                           <el-progress type="circle" :percentage=item.percentage class="myEl-Progress" :color=item.color width=80></el-progress>
                           <p class="taskText">{{item.name}}</p>
                         </div>
-                        <div class="task" v-contextmenu:contextmenuGeneral @click="addTask">
+                    </draggable>
+                    <div class="task" v-contextmenu:contextmenuGeneral @click="addTask">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 490 490" style="enable-background:new 0 0 490 490;" xml:space="preserve" width="80px" height="80px" class="myPlusIcon">
                             <polygon points="222.031,490 267.969,490 267.969,267.969 490,267.969 490,222.031 267.969,222.031 267.969,0 222.031,0   222.031,222.031 0,222.031 0,267.969 222.031,267.969 " fill="#a5aaad"/>
                         </svg>
                         </div>
                         <div class="fakeArea" v-contextmenu:contextmenuGeneral>
                         </div>
-                    </draggable>
-                </div>
+                    </div>
           </el-main>
       </el-container>
     </div>
@@ -107,6 +107,7 @@ export default {
               percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
               height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
             })
+            if(response.data[i].total==0) this.allProjects[i].percentage='0%'
           }
         }).catch(error=> {
           console.log(error.toString())
@@ -151,6 +152,7 @@ export default {
                 percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
                 height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
               })
+              if(response.data[i].total==0) this.allProjects[i].percentage='0%'
             }
           }).catch(error=> {
             console.log(error.toString())
@@ -189,6 +191,7 @@ export default {
                 percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
                 height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
               })
+              if(response.data[i].total==0) this.allProjects[i].percentage='0%'
             }
             }).catch(error=> {
               console.log(error.toString())
@@ -228,6 +231,7 @@ export default {
               percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
               height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
             })
+            if(response.data[i].total==0) this.allProjects[i].percentage='0%'
           }
         }).catch(error=> {
           console.log(error.toString())
@@ -267,6 +271,7 @@ export default {
               percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
               height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
             })
+            if(response.data[i].total==0) this.allProjects[i].percentage='0%'
           }
         }).catch(error=> {
           console.log(error.toString())
@@ -311,6 +316,7 @@ export default {
               percentage: parseInt(response.data[i].completion*100/response.data[i].total)+'%',
               height: (response.data[i].completion*100/response.data[i].total)*0.8+'%'
             })
+            if(response.data[i].total==0) this.allProjects[i].percentage='0%'
           }
         }).catch(error=> {
           console.log(error.toString())
